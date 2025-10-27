@@ -167,7 +167,6 @@ public class EjercicioNumerado {
         System.out.print("Introduce las horas trabajadas: ");
         int horas = lectorTeclado.nextInt();
         lectorTeclado.nextLine(); // Limpiar el buffer
-
         System.out.println("¿Has hecho horas extra? (true/false): " +(horas > 40));
 
         int horasNormales = Math.min(horas, 40);
