@@ -216,4 +216,66 @@ No puedes subir a la atracción. Altura mínima: 120 cm.*/
         }
         lectorTeclado.close();
     }
-}
+    public void ejercicio11(){
+        /*Desarrolla un programa que pida el importe de una compra y si el
+        cliente es socio (true/false). Aplica descuentos según estas reglas:
+        Si es socio Y la compra es mayor o igual a 200€, descuento del 20%.
+        Si es socio Y la compra es menor de 200€, descuento del 10%.
+        Si NO es socio pero la compra es mayor o igual a 300€, descuento del 5%.
+        En cualquier otro caso, no hay descuento. Muestra el importe original,
+        el descuento aplicado y el importe final.
+Ejemplo de salida por consola:
+Introduce el importe de la compra: 250
+¿Eres socio? (true/false): true
+Importe original: 250.0€
+Eres socio y tu compra es >= 200€
+Descuento aplicado (20%): 50.0€
+Importe final: 200.0€*/
+        Scanner lectorTeclado = new Scanner(System.in);
+        System.out.print("Introduce el importe de la compra: ");
+        double importe =lectorTeclado.nextDouble();
+        System.out.print("¿Eres socio? (true/false): ");
+        boolean socio =lectorTeclado.nextBoolean();
+        System.out.printf("Importe: %.2f€%n", importe);
+        if ((importe>=200) && (socio)){
+            double descuento = importe*0.2;
+            double precioFinal = importe-descuento;
+            System.out.printf("Eres socio y tu compra es >= %.2f€%n", importe);
+            System.out.printf("Descuento aplicado (20%%): %.2f€%n", descuento);
+            System.out.printf("Importe final: %.2f€%n", precioFinal);
+        } else if (socio && importe<200){
+            double descuento = importe*0.1;
+            double precioFinal = importe-descuento;
+            System.out.printf("Eres socio y tu compra es < %.2f€%n", importe);
+            System.out.printf("Descuento aplicado (10%%): %.2f€%n", descuento);
+            System.out.printf("Importe final: %.2f€%n", precioFinal);
+        } else if (!socio && importe>=300){
+            double descuento = importe*0.05;
+            double precioFinal = importe-descuento;
+            System.out.printf("No eres socio y tu compra es > %.2f€%n", importe);
+            System.out.printf("Descuento aplicado (5%%): %.2f€%n", descuento);
+            System.out.printf("Importe final: %.2f€%n", precioFinal);
+        } else {
+            System.out.println("Descuento aplicado: (0%)");
+            System.out.printf("Importe final: %.2f€", importe);
+        }
+        lectorTeclado.close();
+    }
+
+        /*Escribe un programa para calcular el precio de entrada a un museo.
+        Pide la edad del usuario y el día de la semana (1=Lunes, 2=Martes...
+        7=Domingo). Las reglas son: Menores de 12 años: entrada gratis.
+        Entre 12 y 17 años: 5€ (pero gratis los martes). Entre 18 y 64 años:
+        10€ (pero 7€ los jueves). 65 años o más: 6€. Usa operadores lógicos
+        para determinar el precio correcto y muestra el cálculo.
+Ejemplo de salida por consola:
+Introduce tu edad: 15
+Introduce el día de la semana (1-7): 2
+Edad: 15 años
+Día de la semana: 2 (Martes)
+¿Eres menor de 12?: false
+¿Tienes entre 12 y 17?: true
+¿Es martes?: true
+Precio de entrada: 0.0€ (Entrada gratuita para menores en martes)*/
+
+    }
