@@ -75,6 +75,31 @@ public class VerificadorContrasena {
         // length() devuelve el número de caracteres de la cadena
         return texto.length();
     }
+    /*Declaración del Método
+public: Es el modificador de acceso. Significa que el método es
+accesible desde cualquier otra clase en el programa.
+static: Indica que el método pertenece a la clase en la que está definido,
+y no a una instancia u objeto específico de esa clase. Puedes llamarlo usando
+el nombre de la clase (ej: NombreClase.longitudCadena(...))
+sin necesidad de crear un objeto de la misma.
+int: Es el tipo de retorno. Especifica que el método devolverá un valor de tipo entero
+(un número sin decimales). Este int será la longitud de la cadena.
+longitudCadena: Es el nombre del método, que describe claramente su propósito.
+(String texto): Es la lista de parámetros. El método acepta un único argumento,
+que es una referencia a un objeto de tipo String (la cadena de texto que se va a medir),
+y se le da el nombre de variable texto dentro del método.
+                                                     Cuerpo del Método
+El cuerpo del método contiene una sola línea ejecutable, precedida de un comentario:
+// length() devuelve el número de caracteres de la cadena: Es un comentario de una sola línea.
+Simplemente explica lo que hace el método length() de la clase String a continuación,
+y es ignorado por el compilador de Java.
+return texto.length();:
+texto: Es la variable que contiene la referencia al objeto String pasado como argumento.
+.length(): Es el método de instancia de la clase String. Cuando se llama a este método sobre
+un objeto String (texto en este caso), calcula y devuelve el número total de
+caracteres Unicode en esa cadena.
+return: Es la palabra clave que finaliza la ejecución del método y devuelve el valor calculado
+(la longitud entera) al punto del código desde donde se llamó a longitudCadena.*/
 
     /**
      * Comprueba si la cadena contiene al menos un dígito.

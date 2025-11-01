@@ -97,6 +97,10 @@ Uso System.out.printf con %.2f para mostrar siempre dos decimales (más claro pa
 
          // Si la distancia es mayor de 100km, añadir 10€
          double costeAdicionalDistancia = (distancia > 100.0) ? 10.0 : 0.0;
+         /*La línea de código  es una forma concisa de escribir una estructura condicional (if/else)
+         y se conoce como Operador Condicional Ternario o simplemente Operador Ternario.
+         tipo\_de\_dato variable = condición ? valor\_si\_verdadero : valor\_si\_falso
+          */
 
          // Subtotal antes de urgencia
          double subtotal = precioBase + costeAdicionalPeso + costeAdicionalDistancia;
