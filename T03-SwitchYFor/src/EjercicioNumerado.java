@@ -228,4 +228,198 @@ Has seleccionado: Configuración */
 Introduce el número del mes (1-12): 7
 El mes 7 corresponde a: Verano */
     }
+
+    public void ejercicio06(){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Introduce un número: ");
+        int numero = sc.nextInt();
+
+        System.out.println("Tabla del " + numero + ":");
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(numero + " x " + i + " = " + (numero * i));
+        }
+/*Esto es un bucle for, y su estructura general es:
+for (inicialización; condición; actualización) {
+    // bloque de código que se repite
+}
+int i = 1 → Inicialización:
+Se crea una variable i de tipo int. y se le asigna valor inicial 1.
+Esta variable sirve como contador o índice del bucle.
+i <= 10 → Condición:
+Antes de cada iteración, Java evalúa esta condición.
+Mientras sea verdadera, se ejecuta el bloque del bucle.
+Cuando sea falsa, el bucle termina.
+i++ → Actualización:
+Después de ejecutar el bloque del bucle, y en caso de que se
+siga cumpliendo la condición, i se incrementa en 1.
+ */
+        sc.close();
+    }
+
+    public void ejercicio07(){
+        /*Crea un programa que pida un número N y use un bucle for
+        para calcular la suma de todos los números desde 1 hasta N.
+        Muestra el resultado final. */
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce un número: ");
+        int n = sc.nextInt();
+
+        int suma = 0;
+
+        System.out.print("Sumando: ");
+        for (int i = 1; i <= n; i++) {
+            suma += i; // suma = suma + i
+/*La clave está en el operador que usamos y cómo funciona la asignación.
+suma += i NO es lo mismo que suma = i
+suma = i reescribirá la variable suma cada vez con el valor de i,
+borrando lo que tenía antes.
+suma += i significa:
+"toma el valor actual de suma, súmale i, y guarda el resultado de nuevo en suma" */
+            System.out.print(i);
+            if (i < n) {
+                System.out.print(" + ");
+            }
+        }
+        System.out.println(); // salto de línea
+        System.out.println("La suma de números del 1 al " + n + " es: " + suma);
+
+        sc.close();
+/*System.out.print("Sumando: "); :
+Muestra el texto "Sumando: " en la misma línea. No agrega un salto de línea al final.
+suma += i; :
+Equivalente a suma = suma + i;.
+Ejemplo: i = 1 → suma = 0 + 1 = 1 */
+
+/* Ejemplo de salida por consola:
+Introduce un número: 5
+Sumando: 1 + 2 + 3 + 4 + 5
+La suma de números del 1 al 5 es: 15 */
+    }
+
+    public void ejercicio08(){
+        /*Desarrolla un programa que pida un número N y use un bucle for
+        para contar cuántos números pares e impares hay desde 1 hasta N.
+        Muestra ambos contadores. */
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Introduce un número: ");
+        int n = sc.nextInt();
+
+        int pares = 0;
+        int impares = 0;
+
+        System.out.println("Recorriendo números del 1 al " + n + "...");
+
+        for (int i = 1; i <= n; i++) {
+            if (i % 2 == 0) {
+                pares++;      // si el número es par, incrementa el contador de pares
+            } else {
+                impares++;    // si no, incrementa el contador de impares
+            }
+        }
+
+        System.out.println("Números pares encontrados: " + pares);
+        System.out.println("Números impares encontrados: " + impares);
+
+        sc.close();
+
+/* Ejemplo de salida por consola:
+Introduce un número: 10
+Recorriendo números del 1 al 10...
+Números pares encontrados: 5
+Números impares encontrados: 5 */
+    }
+
+    public void ejercicio09(){
+        /* Escribe un programa que pida un número entero positivo y calcule
+        su factorial usando un bucle for. El factorial de N es:
+        N! = N × (N-1) × (N-2) × ... × 1 */
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce un número entero positivo: ");
+        int n = sc.nextInt();
+
+        if (n < 0) {
+            System.out.println("El número debe ser positivo.");
+        } else {
+            long factorial = 1;
+            System.out.println("Calculando " + n + "!");
+            for (int i = n; i >= 1; i--) {
+                factorial *= i;
+                System.out.print(i);
+                if (i > 1) {
+                    System.out.print(" x ");
+                }
+            }
+            System.out.println();
+            System.out.println("El factorial de " + n + " es: " + factorial);
+        }
+
+        sc.close();
+    }
+
+    public void ejercicio10(){
+        /* Crea un programa que muestre un menú con 3 tipos de ejercicios:
+        1=Flexiones, 2=Abdominales, 3=Sentadillas.
+        Pide al usuario que elija un ejercicio y cuántas repeticiones quiere hacer.
+        Usa un switch para determinar el ejercicio y un for para contar las
+        repeticiones una a una. */
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("--- EJERCICIOS ---");
+        System.out.println("1. Flexiones");
+        System.out.println("2. Abdominales");
+        System.out.println("3. Sentadillas");
+        System.out.print("Elige un ejercicio (1-3): ");
+        int opcion = sc.nextInt();
+
+        System.out.print("¿Cuántas repeticiones?: ");
+        int repeticiones = sc.nextInt();
+
+        String ejercicio = "";
+
+        switch (opcion) {
+            case 1:
+                ejercicio = "Flexiones";
+                break;
+            case 2:
+                ejercicio = "Abdominales";
+                break;
+            case 3:
+                ejercicio = "Sentadillas";
+                break;
+            default:
+                System.out.println("Opción no válida.");
+                sc.close();
+                return;
+        }
+
+        System.out.println("Has elegido: " + ejercicio);
+
+        for (int i = 1; i <= repeticiones; i++) {
+            System.out.println("Repetición " + i + " completada");
+        }
+
+        System.out.println("¡Ejercicio completado! Has hecho " + repeticiones + " " + ejercicio.toLowerCase() + ".");
+
+        sc.close();
+
+/* Ejemplo de salida por consola:
+--- EJERCICIOS ---
+1. Flexiones
+2. Abdominales
+3. Sentadillas
+Elige un ejercicio (1-3): 1
+¿Cuántas repeticiones?: 5
+Has elegido: Flexiones
+Repetición 1 completada
+Repetición 2 completada
+Repetición 3 completada
+Repetición 4 completada
+Repetición 5 completada
+¡Ejercicio completado! Has hecho 5 flexiones. */
+    }
 }
