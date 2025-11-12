@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Calculadora basica por consola/Calculadora basica por consola.iml" filepath="$PROJECT_DIR$/Calculadora basica por consola/Calculadora basica por consola.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio 10 Conv de temperaturas/Ejercicio 10 Conv de temperaturas.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio 10 Conv de temperaturas/Ejercicio 10 Conv de temperaturas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio1 Definir y mostrar variables/Ejercicio1 Definir y mostrar variables.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio1 Definir y mostrar variables/Ejercicio1 Definir y mostrar variables.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio2 Modificar variables/Ejercicio2 Modificar variables.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio2 Modificar variables/Ejercicio2 Modificar variables.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio3 Tipos de variables/Ejercicio3 Tipos de variables.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio3 Tipos de variables/Ejercicio3 Tipos de variables.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio4 VariablesConNombresDescriptivos/Ejercicio4 VariablesConNombresDescriptivos.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio4 VariablesConNombresDescriptivos/Ejercicio4 VariablesConNombresDescriptivos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio5 Declarac y uso de const/Ejercicio5 Declarac y uso de const.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio5 Declarac y uso de const/Ejercicio5 Declarac y uso de const.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio6 OperacAritmeticasSimples/Ejercicio6 OperacAritmeticasSimples.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio6 OperacAritmeticasSimples/Ejercicio6 OperacAritmeticasSimples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio7 Presentac personal/Ejercicio7 Presentac personal.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio7 Presentac personal/Ejercicio7 Presentac personal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio8 Calculadora de area de un rectangulo/Ejercicio8 Calculadora de area de un rectangulo.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio8 Calculadora de area de un rectangulo/Ejercicio8 Calculadora de area de un rectangulo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT01/Ejercicio9 Info de un producto/Ejercicio9 Info de un producto.iml" filepath="$PROJECT_DIR$/EjerciciosT01/Ejercicio9 Info de un producto/Ejercicio9 Info de un producto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjerciciosT02/EjerciciosT02.iml" filepath="$PROJECT_DIR$/EjerciciosT02/EjerciciosT02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HolaMundo/HolaMundo.iml" filepath="$PROJECT_DIR$/HolaMundo/HolaMundo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PRO.iml" filepath="$PROJECT_DIR$/.idea/PRO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/T03-If/T03-If.iml" filepath="$PROJECT_DIR$/T03-If/T03-If.iml" />
+      <module fileurl="file://$PROJECT_DIR$/T03-SwitchYFor/T03-SwitchYFor.iml" filepath="$PROJECT_DIR$/T03-SwitchYFor/T03-SwitchYFor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/T30-While y Do-While/T30-While y Do-While.iml" filepath="$PROJECT_DIR$/T30-While y Do-While/T30-While y Do-While.iml" />
+    </modules>
+  </component>
+</project>
