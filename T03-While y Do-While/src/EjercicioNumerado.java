@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random; /*He utilizado la clase Random para que
 el número secreto del ejercicio04 sea diferente cada vez que se ejecute
@@ -285,7 +286,32 @@ Elige una opción: 1
 hacer una cuenta atrás desde N hasta 1, mostrando cada número.
 Al llegar a 1, debe mostrar "¡Despegue!". */
 
+        Scanner scanner = new Scanner(System.in);
 
+// 1. Pedir al usuario que introduzca el número inicial (N)
+        System.out.print("Introduce un número: ");
+        int N = scanner.nextInt();
+
+        // Inicializar la variable de conteo (será N al inicio)
+        int contador = N;
+
+        System.out.println("Cuenta atrás:");
+
+        // 2. Usar un bucle while para contar desde N hasta 1
+        // El bucle se repite MIENTRAS el contador sea mayor o igual a 1
+        while (contador >= 1) {
+
+            // Mostrar el valor actual del contador sin salto de línea
+            System.out.println(contador);
+
+            // Decrementar el contador
+            contador--;
+        }
+
+        // 3. Mostrar el mensaje final después de que el bucle termina
+        System.out.println("¡Despegue!");
+
+        scanner.close();
 
 /* Ejemplo de salida por consola:
 Introduce un número: 5
@@ -296,5 +322,245 @@ Cuenta atrás:
 2
 1
 ¡Despegue! */
+    }
+
+    public void ejercicio07(){ //Calcular promedio con while
+/* Crea un programa que pida al usuario cuántas calificaciones va a introducir.
+Luego, usa un bucle while para pedir cada calificación una por una, sumarlas
+y al final calcular y mostrar el promedio. */
+
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Pido el número total de calificaciones
+        System.out.print("¿Cuántas calificaciones vas a introducir?: ");
+        int totalCalificaciones = scanner.nextInt();
+
+        // Variables para el cálculo
+        double sumaTotal = 0.0;
+        int contador = 1; // Contador para saber qué calificación estamos pidiendo
+
+        System.out.println("----------------------------------------");
+
+        // 2. Usar el bucle while para pedir y sumar cada calificación
+        // El bucle se repite MIENTRAS el contador sea menor o igual al total
+        while (contador <= totalCalificaciones) {
+
+            // Pedir la calificación actual
+            System.out.print("Introduce la calificación " + contador + ": ");
+            double calificacion = scanner.nextDouble();
+
+            // Sumarla al acumulador
+            sumaTotal += calificacion;
+
+            // Incrementar el contador
+            contador++;
+        }
+
+        // 3. Realizar los cálculos finales
+        double promedio = 0.0;
+        if (totalCalificaciones > 0) {
+            promedio = sumaTotal / totalCalificaciones;
+        }
+
+        System.out.println("----------------------------------------");
+
+        // 4. Mostrar los resultados
+        System.out.println("Suma total: " + sumaTotal);
+        // Usamos String.format para mostrar el promedio con dos decimales, como en el ejemplo
+        System.out.printf("Promedio de calificaciones: %.2f\n", promedio);
+
+        scanner.close();
+
+/* Ejemplo de salida por consola:
+¿Cuántas calificaciones vas a introducir?: 4
+Introduce la calificación 1: 7.5
+Introduce la calificación 2: 8.0
+Introduce la calificación 3: 6.5
+Introduce la calificación 4: 9.0
+Suma total: 31.0
+Promedio de calificaciones: 7.75 */
+
+    }
+
+    public void ejercicio08(){ //Validación de edad con do-while
+/* Desarrolla un programa que pida la edad del usuario. Usa un bucle do-while
+para validar que la edad introducida esté entre 0 y 120. Si no es válida,
+debe volver a pedirla. Una vez válida, muestra un mensaje de confirmación. */
+
+        Scanner scanner = new Scanner(System.in);
+        int edad;
+        boolean edadValida; // Bandera para controlar la validez
+
+        // El bucle do-while garantiza que se pida la edad al menos una vez
+        do {
+            System.out.print("Introduce tu edad: ");
+
+            // 1. Verificación de tipo de dato (opcional, pero buena práctica)
+            if (scanner.hasNextInt()) {
+                edad = scanner.nextInt();
+
+                // 2. Verificación de rango
+                if (edad >= 0 && edad <= 120) {
+                    edadValida = true; // La edad es válida
+                } else {
+                    edadValida = false; // La edad está fuera del rango
+                    System.out.println("Edad no válida. Debe estar entre 0 y 120.");
+                }
+            } else {
+                // Manejo de entrada no numérica
+                System.out.println("Entrada no válida. Por favor, introduce un número entero.");
+                scanner.next(); // Consume la entrada no válida para evitar bucle infinito
+                edadValida = false; // Forzar la repetición del bucle
+                edad = -1; // Asignar un valor seguro para evitar errores de inicialización, aunque no se usará
+            }
+
+            // El bucle continúa MIENTRAS la edad NO sea válida
+        } while (!edadValida);
+
+        // 3. Mostrar el mensaje de confirmación
+        System.out.println("Edad válida: " + edad + " años. ¡Gracias!");
+
+/* Ejemplo de salida por consola:
+Introduce tu edad: -5
+Edad no válida. Debe estar entre 0 y 120.
+Introduce tu edad: 150
+Edad no válida. Debe estar entre 0 y 120.
+Introduce tu edad: 25
+Edad válida: 25 años. ¡Gracias! */
+
+    }
+
+    public void ejercicio09() { //Combinando while, for y switch - Sistema de notas
+/* Crea un programa que pida al usuario cuántos estudiantes hay en una clase.
+Para cada estudiante, usa un bucle while para pedir su calificación numérica
+(0-10). Luego, usa un bucle for para mostrar todas las calificaciones y usa
+un switch para convertir cada nota numérica en letra: 9-10=A, 7-8=B, 5-6=C,
+3-4=D, 0-2=F. */
+
+        Scanner scanner = new Scanner(System.in);
+
+        // 1. Pedir el número total de estudiantes
+        System.out.print("¿Cuántos estudiantes hay?: ");
+        int numEstudiantes = scanner.nextInt();
+
+        // Creamos un ArrayList para almacenar las calificaciones
+        ArrayList<Integer> calificaciones = new ArrayList<>();
+
+        int contador = 1; // Inicializamos el contador para el bucle while
+
+        // 2. Bucle WHILE para la entrada de calificaciones
+        while (contador <= numEstudiantes) {
+            System.out.print("Introduce la nota del estudiante " + contador + " (0-10): ");
+
+            // Verificamos que sea un entero
+            if (scanner.hasNextInt()) {
+                int nota = scanner.nextInt();
+
+                // Validación básica de rango (0-10)
+                if (nota >= 0 && nota <= 10) {
+                    calificaciones.add(nota); // Almacena la nota
+                    contador++; // Avanza al siguiente estudiante
+                } else {
+                    System.out.println("Nota fuera de rango. Debe estar entre 0 y 10. Intenta de nuevo.");
+                }
+            } else {
+                System.out.println("Entrada no válida. Por favor, introduce un número entero.");
+                scanner.next(); // Limpiar el buffer de entrada
+            }
+        }
+
+        scanner.close();
+
+        // 3. Bucle FOR para procesar y mostrar las calificaciones
+        System.out.println("--- REPORTE DE CALIFICACIONES ---");
+
+        // Iteramos a través de la lista de calificaciones
+        for (int i = 0; i < calificaciones.size(); i++) {
+            int notaNumerica = calificaciones.get(i);
+            String calificacionLetra = "";
+
+            // 4. Estructura SWITCH para convertir nota a letra
+            // Se usa la división entera (nota / 2) para agrupar los rangos
+            switch (notaNumerica / 2) {
+                case 5: // 10/2 = 5, 9/2 = 4 (OJO: aquí el 9 no se incluye si no se ajusta el caso 4)
+                case 4: // 9/2 = 4, 8/2 = 4. Esto agrupa 8, 9, 10
+                    if (notaNumerica >= 9) { // 9-10
+                        calificacionLetra = "A";
+                    } else { // 8
+                        calificacionLetra = "B";
+                    }
+                    break;
+                case 3: // 7/2 = 3, 6/2 = 3. Esto agrupa 6, 7
+                    if (notaNumerica >= 7) { // 7
+                        calificacionLetra = "B";
+                    } else { // 6
+                        calificacionLetra = "C";
+                    }
+                    break;
+                case 2: // 5/2 = 2, 4/2 = 2. Esto agrupa 4, 5
+                    if (notaNumerica >= 5) { // 5
+                        calificacionLetra = "C";
+                    } else { // 4
+                        calificacionLetra = "D";
+                    }
+                    break;
+                case 1: // 3/2 = 1, 2/2 = 1. Esto agrupa 2, 3
+                    if (notaNumerica >= 3) { // 3
+                        calificacionLetra = "D";
+                    } else { // 2
+                        calificacionLetra = "F";
+                    }
+                    break;
+                case 0: // 1/2 = 0, 0/2 = 0. Esto agrupa 0, 1
+                    calificacionLetra = "F";
+                    break;
+                default:
+                    calificacionLetra = "Inválida";
+            }
+
+            // Simplificación del switch usando rangos más claros y solo la división
+            // **NOTA**: Para cumplir el ejercicio con los rangos exactos (9-10=A, 7-8=B, etc.) es más limpio usar IF/ELSE IF,
+            // pero el siguiente bloque demuestra una forma más compacta de usar SWITCH para rangos:
+
+            String letra;
+            switch (notaNumerica) {
+                case 10:
+                case 9:
+                    letra = "A";
+                    break;
+                case 8:
+                case 7:
+                    letra = "B";
+                    break;
+                case 6:
+                case 5:
+                    letra = "C";
+                    break;
+                case 4:
+                case 3:
+                    letra = "D";
+                    break;
+                case 2:
+                case 1:
+                case 0:
+                default: // En teoría, si validamos 0-10, no necesitamos default
+                    letra = "F";
+                    break;
+            }
+
+            // Mostrar el resultado
+            System.out.println("Estudiante " + (i + 1) + ": " + notaNumerica + " puntos = Calificación " + letra);
+
+        }
+/* Ejemplo de salida por consola:
+¿Cuántos estudiantes hay?: 3
+Introduce la nota del estudiante 1 (0-10): 8
+Introduce la nota del estudiante 2 (0-10): 6
+Introduce la nota del estudiante 3 (0-10): 9
+
+--- REPORTE DE CALIFICACIONES ---
+Estudiante 1: 8 puntos = Calificación B
+Estudiante 2: 6 puntos = Calificación C
+Estudiante 3: 9 puntos = Calificación A */
     }
 }
