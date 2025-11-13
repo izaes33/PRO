@@ -445,6 +445,27 @@ un switch para convertir cada nota numérica en letra: 9-10=A, 7-8=B, 5-6=C,
 
         // Creamos un ArrayList para almacenar las calificaciones
         ArrayList<Integer> calificaciones = new ArrayList<>();
+        /* La sintaxis ArrayList<Integer> nombre = new ArrayList<>();
+        es la forma estándar en Java de declarar, inicializar y tipificar
+        una lista dinámica que contendrá objetos de tipo Integer.
+        ---------------------------------------------------------------
+        *ArrayList es una clase en el paquete java.util que implementa la
+        interfaz List y utiliza un array redimensionable dinámicamente
+        para almacenar sus elementos.
+        *<Integer>: Esto se conoce como genéricos (Generics). Indica el
+        tipo de objeto que puede almacenar la lista. En Java, los arrays
+        y ArrayLists no pueden almacenar tipos de datos primitivos
+        (int, char, double, etc.) directamente, por lo que usamos la clase
+        Wrapper (Integer) que envuelve al primitivo int. */
+        //---------------------------------------------------------------
+        /* new: Es la palabra clave que se utiliza para crear una nueva
+        instancia (un nuevo objeto) de la clase especificada en la memoria.
+        *ArrayList<>(): Llama al constructor de la clase ArrayList para crear
+        el objeto de lista en sí.
+        *La sintaxis de diamante (<>) se introdujo en Java 7 y se llama
+        inferencia de tipo. Le dice al compilador que infiera el tipo de genérico
+        (que ya se especificó como <Integer> en la declaración) sin tener que
+        repetirlo. Es equivalente a escribir new ArrayList<Integer>(). */
 
         int contador = 1; // Inicializamos el contador para el bucle while
 
@@ -477,52 +498,17 @@ un switch para convertir cada nota numérica en letra: 9-10=A, 7-8=B, 5-6=C,
         // Iteramos a través de la lista de calificaciones
         for (int i = 0; i < calificaciones.size(); i++) {
             int notaNumerica = calificaciones.get(i);
-            String calificacionLetra = "";
-
-            // 4. Estructura SWITCH para convertir nota a letra
-            // Se usa la división entera (nota / 2) para agrupar los rangos
-            switch (notaNumerica / 2) {
-                case 5: // 10/2 = 5, 9/2 = 4 (OJO: aquí el 9 no se incluye si no se ajusta el caso 4)
-                case 4: // 9/2 = 4, 8/2 = 4. Esto agrupa 8, 9, 10
-                    if (notaNumerica >= 9) { // 9-10
-                        calificacionLetra = "A";
-                    } else { // 8
-                        calificacionLetra = "B";
-                    }
-                    break;
-                case 3: // 7/2 = 3, 6/2 = 3. Esto agrupa 6, 7
-                    if (notaNumerica >= 7) { // 7
-                        calificacionLetra = "B";
-                    } else { // 6
-                        calificacionLetra = "C";
-                    }
-                    break;
-                case 2: // 5/2 = 2, 4/2 = 2. Esto agrupa 4, 5
-                    if (notaNumerica >= 5) { // 5
-                        calificacionLetra = "C";
-                    } else { // 4
-                        calificacionLetra = "D";
-                    }
-                    break;
-                case 1: // 3/2 = 1, 2/2 = 1. Esto agrupa 2, 3
-                    if (notaNumerica >= 3) { // 3
-                        calificacionLetra = "D";
-                    } else { // 2
-                        calificacionLetra = "F";
-                    }
-                    break;
-                case 0: // 1/2 = 0, 0/2 = 0. Esto agrupa 0, 1
-                    calificacionLetra = "F";
-                    break;
-                default:
-                    calificacionLetra = "Inválida";
-            }
-
-            // Simplificación del switch usando rangos más claros y solo la división
-            // **NOTA**: Para cumplir el ejercicio con los rangos exactos (9-10=A, 7-8=B, etc.) es más limpio usar IF/ELSE IF,
-            // pero el siguiente bloque demuestra una forma más compacta de usar SWITCH para rangos:
-
+            /* Cabecera del Bucle -> Condición de Terminación: i < calificaciones.size():
+            calificaciones.size(): Este metodo DEVUELVE EL Nº TOTAL de elementos
+            ALMACENADOS actualmente EN EL ARRAYLIST llamado calificaciones.
+            ------------------------------------------------
+            Cuerpo ->Acceso al Elemento: int notaNumerica = calificaciones.get(i):
+            calificaciones.get(i): Este es un método de la clase ArrayList.
+            Utiliza el índice actual (i) para recuperar el objeto almacenado
+            en esa posición de la lista.
+             */
             String letra;
+            // 4. Estructura SWITCH para convertir nota a letra
             switch (notaNumerica) {
                 case 10:
                 case 9:
@@ -540,10 +526,7 @@ un switch para convertir cada nota numérica en letra: 9-10=A, 7-8=B, 5-6=C,
                 case 3:
                     letra = "D";
                     break;
-                case 2:
-                case 1:
-                case 0:
-                default: // En teoría, si validamos 0-10, no necesitamos default
+                default:
                     letra = "F";
                     break;
             }
@@ -562,5 +545,186 @@ Introduce la nota del estudiante 3 (0-10): 9
 Estudiante 1: 8 puntos = Calificación B
 Estudiante 2: 6 puntos = Calificación C
 Estudiante 3: 9 puntos = Calificación A */
+    }
+
+    public void ejercicio10(){ //Cajero automático con do-while, switch y while
+/* Desarrolla un programa que simule un cajero automático. El saldo inicial es 1000€.
+Usa un bucle do-while para mostrar un menú con opciones: 1=Consultar saldo,
+2=Retirar dinero, 3=Depositar dinero, 4=Salir. Usa switch para cada opción.
+Para retirar dinero, usa un bucle while para validar que no se retire más del saldo
+disponible (si intenta retirar más, debe volver a pedir la cantidad). Para depositar,
+valida que sea una cantidad positiva. */
+
+        Scanner scanner = new Scanner(System.in);
+        // Usamos double para manejar el dinero con decimales.
+        double saldo = 1000.00;
+        int opcion;
+
+        System.out.println("--- CAJERO AUTOMÁTICO ---");
+        System.out.printf("Saldo inicial: %.2f€\n", saldo);
+
+        // El bucle do-while mantiene el menú activo hasta que se elige "Salir"
+        do {
+            // 1. Mostrar menú
+            menu();
+
+            System.out.print("Elige una opción: ");
+            if (scanner.hasNextInt()) {
+                opcion = scanner.nextInt();
+                // Consumir el salto de línea pendiente
+                scanner.nextLine();
+
+                System.out.println("----------------------------------------");
+
+                // 2. Procesar opción con switch
+                switch (opcion) {
+                    case 1:
+                        consultarSaldo(saldo);
+                        break;
+                    case 2:
+                        saldo = retirarDinero(scanner, saldo);
+                        break;
+                    case 3:
+                        saldo = depositarDinero(scanner, saldo);
+                        break;
+                    case 4:
+                        System.out.println("Gracias por usar el cajero. ¡Hasta luego!");
+                        break;
+                    default:
+                        System.out.println("Opción no válida. Por favor, elige un número del 1 al 4.");
+                }
+            } else {
+                System.out.println("Entrada no válida. Por favor, introduce un número.");
+                scanner.next(); // Limpiar buffer
+                opcion = 0; // Forzar repetición
+            }
+
+            System.out.println("----------------------------------------");
+
+            // Repetir MIENTRAS la opción NO sea 4
+        } while (opcion != 4);
+
+        scanner.close();
+    }
+
+    // Métodos auxiliares para la lógica del cajero
+
+    public static void menu() {
+        System.out.println("\n--- MENÚ ---");
+        System.out.println("1. Consultar saldo");
+        System.out.println("2. Retirar dinero");
+        System.out.println("3. Depositar dinero");
+        System.out.println("4. Salir");
+    }
+
+    public static void consultarSaldo(double saldo) {
+        System.out.printf("Tu saldo actual es: %.2f€\n", saldo);
+    }
+
+    public static double retirarDinero(Scanner scanner, double saldoActual) {
+        double cantidadRetiro;
+        boolean retiroValido = false;
+
+        // Bucle WHILE para validar que haya fondos suficientes
+        while (!retiroValido) {
+            System.out.print("¿Cuánto deseas retirar?: ");
+
+            if (scanner.hasNextDouble()) {
+                cantidadRetiro = scanner.nextDouble();
+                scanner.nextLine(); // Limpiar buffer
+
+                if (cantidadRetiro > 0) {
+                    if (cantidadRetiro <= saldoActual) {
+                        // Retiro válido
+                        saldoActual -= cantidadRetiro;
+                        System.out.printf("Retiro exitoso. Has retirado: %.2f€\n", cantidadRetiro);
+                        System.out.printf("Nuevo saldo: %.2f€\n", saldoActual);
+                        retiroValido = true;
+                    } else {
+                        // Fondos insuficientes
+                        System.out.printf("Fondos insuficientes. Tu saldo es: %.2f€\n", saldoActual);
+                    }
+                } else {
+                    System.out.println("La cantidad a retirar debe ser positiva.");
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, introduce un valor numérico.");
+                scanner.next(); // Limpiar buffer
+            }
+        }
+        return saldoActual;
+    }
+
+    public static double depositarDinero(Scanner scanner, double saldoActual) {
+        double cantidadDeposito;
+        boolean depositoValido = false;
+
+        // Bucle WHILE para validar el depósito
+        while (!depositoValido) {
+            System.out.print("¿Cuánto deseas depositar?: ");
+
+            if (scanner.hasNextDouble()) {
+                cantidadDeposito = scanner.nextDouble();
+                scanner.nextLine(); // Limpiar buffer
+
+                if (cantidadDeposito > 0) {
+                    // Depósito válido
+                    saldoActual += cantidadDeposito;
+                    System.out.printf("Depósito exitoso. Has depositado: %.2f€\n", cantidadDeposito);
+                    System.out.printf("Nuevo saldo: %.2f€\n", saldoActual);
+                    depositoValido = true;
+                } else {
+                    // Cantidad no positiva
+                    System.out.println("El depósito debe ser una cantidad positiva.");
+                    scanner.next(); // Limpiar buffer
+                }
+            } else {
+                System.out.println("Entrada inválida. Por favor, introduce un valor numérico positivo.");
+                scanner.next(); // Limpiar buffer
+            }
+        }
+        return saldoActual;
+
+/* Ejemplo de salida por consola:
+--- CAJERO AUTOMÁTICO ---
+Saldo inicial: 1000€
+
+--- MENÚ ---
+1. Consultar saldo
+2. Retirar dinero
+3. Depositar dinero
+4. Salir
+Elige una opción: 1
+Tu saldo actual es: 1000€
+
+--- MENÚ ---
+1. Consultar saldo
+2. Retirar dinero
+3. Depositar dinero
+4. Salir
+Elige una opción: 2
+¿Cuánto deseas retirar?: 1500
+Fondos insuficientes. Tu saldo es: 1000€
+¿Cuánto deseas retirar?: 300
+Retiro exitoso. Has retirado: 300€
+Nuevo saldo: 700€
+
+--- MENÚ ---
+1. Consultar saldo
+2. Retirar dinero
+3. Depositar dinero
+4. Salir
+Elige una opción: 3
+¿Cuánto deseas depositar?: 200
+Depósito exitoso. Has depositado: 200€
+Nuevo saldo: 900€
+
+--- MENÚ ---
+1. Consultar saldo
+2. Retirar dinero
+3. Depositar dinero
+4. Salir
+Elige una opción: 4
+Gracias por usar el cajero. ¡Hasta luego! */
     }
 }
