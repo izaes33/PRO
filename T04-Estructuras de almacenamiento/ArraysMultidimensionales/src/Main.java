@@ -1,8 +1,11 @@
 import BuscarElemento.BuscarElemento;
+import ContadorParesImpares.ContadorParesImpares;
 import CrearMostrar.CrearMostrar;
+import EncuentraMayor.EncuentraMayor;
 import PromedioFila.PromedioFila;
 import RellenarConInput.RellenarConInput;
 import SumarElementos.SumarElementos;
+import TransponerMatriz.TransponerMatriz;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,9 +20,18 @@ public class Main {
         sumarElementos.sumar();
 
         BuscarElemento buscarElemento=new BuscarElemento();
-        buscarElemento.buscar(); */
+        buscarElemento.buscar();
 
         PromedioFila promedioFila=new PromedioFila();
         promedioFila.ejecutaMetodo();
+
+        EncuentraMayor encuentraMayor=new EncuentraMayor();
+        encuentraMayor.encuentraMayor();
+
+        TransponerMatriz transponerMatriz=new TransponerMatriz();
+        transponerMatriz.transponerMatriz(); */
+
+        ContadorParesImpares contadorParesImpares=new ContadorParesImpares();
+        contadorParesImpares.ejecutarMetodo();
     }
 }
