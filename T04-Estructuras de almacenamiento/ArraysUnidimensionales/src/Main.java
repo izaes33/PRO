@@ -34,10 +34,10 @@ public class Main {
         mayorMenor.mayorMenor();
 
         ContarElemento contarElemento = new ContarElemento();
-        contarElemento.contar(); */
+        contarElemento.contar();
 
         InvertirArray invertirArray = new InvertirArray();
-        invertirArray.invertir();
+        invertirArray.invertir(); */
 
         SistemaDeCalificaciones sistemaDeCalificaciones = new SistemaDeCalificaciones();
         sistemaDeCalificaciones.sistemaDeCalificaciones();
