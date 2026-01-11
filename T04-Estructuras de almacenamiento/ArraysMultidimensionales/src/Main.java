@@ -4,8 +4,10 @@ import CrearMostrar.CrearMostrar;
 import EncuentraMayor.EncuentraMayor;
 import PromedioFila.PromedioFila;
 import RellenarConInput.RellenarConInput;
+import SistemaDeNotas.SistemaDeNotas;
 import SumarElementos.SumarElementos;
 import TransponerMatriz.TransponerMatriz;
+import TablaDeMultiplicar.TablaDeMultiplicar;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,9 +31,15 @@ public class Main {
         encuentraMayor.encuentraMayor();
 
         TransponerMatriz transponerMatriz=new TransponerMatriz();
-        transponerMatriz.transponerMatriz(); */
+        transponerMatriz.transponerMatriz();
 
         ContadorParesImpares contadorParesImpares=new ContadorParesImpares();
         contadorParesImpares.ejecutarMetodo();
+
+        TablaDeMultiplicar tablaDeMultiplicar=new TablaDeMultiplicar();
+        tablaDeMultiplicar.ejecutar(); */
+
+        SistemaDeNotas sistemaDeNotas=new SistemaDeNotas();
+        sistemaDeNotas.ejecutar();
     }
 }
