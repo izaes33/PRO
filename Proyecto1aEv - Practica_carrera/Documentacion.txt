@@ -1,0 +1,41 @@
+El simulador de carreras se estuctura de manera que:
+Una clase Main con su respectivo método instancia a la clase que coordina toda la ejecución (CampController) y llama a su método de partida (iniciarCamp).
+
+La clase CampController primero indica su paquete e importa el paquete model y las clases Scanner y comparator, tras esto, declara la clase con tres atributos:
+campeonato → atributo de instancia de tipo Campeonato
+carreraController → atributo de instancia de tipo CarreraController
+scanner → atributo de instancia de tipo Scanner, inicializado directamente.
+
+Después de esto, incluye un constructor vacío en el que inicializa CarreraControler. 
+Lo siguiente que incluye es el método iniciarCampeonato, en el que se pide al usuario que introduzca el número de carreras que compondrá el campeonato, tras lo cual
+se guarda la entrada de datos en una variable numCarreras y se usa como parámetro para crear un objeto de la Clase Campeonato mediante el método setter que ella incluye
+(la clase Campeonato va a servir para guardar tanto el número de carreras como un ArrayList de objetos de la Clase Piloto, que a su vez se componen de los atributos
+nombre, dorsal, puntosCarrera y puntosAcumulados, y en cuya clase se incluyen constructores, getter y setter que serán utilizados a continuación).
+
+Seguidamente, llama al método numeroCoches de la clase CarreraController, el cual pide por consola que se introduzca el número de coches que se van a crear y guarda
+el número en la variable numeroCoches, para mediante un for ejecutar repetidamente el método crearCoche, que pide al usuario que introduzca los datos necesarios
+para crear cada coche y cada piloto, creando seguidamente en cada iteración un piloto y un coche (que a su vez incluye piloto en sus parámetros) y guardando cada
+coche en un ArrayList que es parámetro de CarreraController. En este momento vamos a aprovechar para dar un vistazo a la Clase Coche, la cual se compone de de los
+parámetros: marca, modelo, km y piloto, y aporta métodos como son: un constructor vacío, otro con parámetros marca, modelo y piloto, getters y setters.
+
+De regreso al método que marca toda la ejecución, lo siguiente que ocurre es que se añaden los pilotos en Campeonato recorriendo con un foreach el ArrayList de coches
+que se ha guardado en CarreraController y utilizando el setter de la clase Camponato.
+A continuación pasan a ejecutarse las carreras una a una mediante otro for que recorre numCarreras, y en cada ejecución llama al método kmCarrera de CarreraController,
+que pide al usuario que introduzca los km de la carrera, los guarda en una variable, y crea un nuevo objeto Carrera, para después crear una variable booleana que va a
+servir para que en la última carrera no se imprima la clasificación general (porque es prácticamente igual a la impresión de la clasificación final), llamar al método
+simularCarrera de CarreraController añadiendo un parámetro ultimaCarrera, y en la cual lo que sucede es: primero se resetean los km de cada coche, y seguido se
+inicializa una bandera booleana carreraEnCurso=true, para que while se ejecute, tras ello, un for recorre cada coche creando una variable kmAleatorio que calcula una
+cifra entre 20 y 50, añadiendo esa cifra al coche, y haciendo una comprobación en la que en caso de que el coche  haya alcanzado los km de la carrera, carreraEnCurso
+se vuelva false y deje de ejecutarse el while.
+Tras ello, se ordenan los coches según los kilómetros que habían recorrido en el momento en que el primero superó o igualó los km de la carrera y se les asignan puntos
+de carrera y de campeonato. Después se muestran los resultados de la carrera y la clasificación general, y en caso de ser la última carrera, los resultados finales.
+(Para mostrar los resultados finales se ordena el ArrayList de Pilotos de la clase Campeonato).
+
+
+Aunque en la Clase model Piloto, el parámetro puntosCarrera sólo se usa para almacenar temporalmente los puntos en el objeto piloto, y para la funcionalidad del
+programa valdría con la variable creada en el método simularCarrera de CarreraController, decido dejarlo así para reflejar los datos en el objeto, teniendo en cuenta
+la posibilidad de quitar el parámetro.
+
+Por otra parte, no se está dando mayor utilidad al parámetro numeroCarreras de la Clase objeto Campeonato el cual únicamente sirve para
+guardar los datos del mismo, y para que el programa funcione también sería innecesario porque funcionaría guardando únicametne una variable temporal en
+campeonatoController.
