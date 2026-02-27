@@ -1,0 +1,326 @@
+/*import model.Usuario;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class CodigoBorjaLecciones {
+    package controller;
+
+import model.Usuario;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+
+    public void leerFichero(String path) {
+        File file = new File(path);
+        System.out.println(file.getName());
+        if (file.isDirectory()) {
+            for (File item : file.listFiles()) {
+                leerFichero(item.getAbsolutePath());
+            }
+        }
+    }
+
+    public void leerContenidoFichero(String path) {
+        // File -> FileReader
+        File file = new File(path);
+        FileReader fileReader = null;
+
+        try {
+            fileReader = new FileReader(file);
+            int codigo;
+            while ((codigo = fileReader.read()) != -1) {
+                // mientras la lectura sea != -1 -> muestra
+                // System.out.print(codigo);
+                // System.out.print(" - ");
+                System.out.print((char) codigo);
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("El fichero que intentas leer no existe");
+            // prueba con otra ruta
+            // leerContenidoFichero();
+        } catch (IOException e) {
+            System.out.println("No cuentas con los permisos suficientes");
+            System.out.println("Ponte en contacto con tu administrador");
+        } finally {
+            try {
+                fileReader.close();
+            } catch (IOException | NullPointerException e) {
+                System.out.println("Error en el cerrado");
+            }
+        }
+    }
+
+    public void leerContenidoFicheroLineas(String path) {
+        // File -> FileReader -> BufferedReader
+        File file = new File(path);
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+            // fileReader = ;
+            bufferedReader = new BufferedReader(new FileReader(file));
+            String linea;
+            while ((linea = bufferedReader.readLine()) != null) {
+                // linea = bufferedReader.readLine();
+                System.out.println(linea);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("La ruta es incorrecta");
+        } catch (IOException e) {
+            System.out.println("No cuentas con los permisos suficientes");
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException | NullPointerException e) {
+                System.out.println("Error en el cerrado del fichero");
+            }
+        }
+
+    }
+
+    public void descifrarContenido(String path) {
+        File file = new File(path);
+        BufferedReader reader = null;
+        Scanner scanner = new Scanner(System.in);
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            System.out.println("Dime cual es la clave de cifrado");
+            int clave = scanner.nextInt();
+            String linea = reader.readLine();
+            String[] numeros = linea.split(" ");
+            for (String item : numeros) {
+                int codigo = Integer.parseInt(item);
+                System.out.print((char) (codigo / clave));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("El fichero no es valido");
+        } catch (IOException e) {
+            System.out.println("Error en la lectura del fichero, sin permisos");
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException | NullPointerException e) {
+                System.out.println("Error en el cerrado");
+            }
+        }
+
+    }
+
+    // Define un método público que no devuelve nada y recibe la ruta del archivo como String
+    public void escrituraFichero(String path) {
+        // Crea un objeto File con la ruta proporcionada para representar el archivo en el sistema
+        File file = new File(path);
+        // Declara la variable FileWriter fuera del try para que sea accesible en el bloque finally
+        FileWriter fileWriter = null;
+        // Crea un objeto Scanner para leer la entrada del usuario desde la consola
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            // Inicializa el FileWriter en modo "append" (true), lo que añade texto al final sin borrar lo anterior
+            fileWriter = new FileWriter(file, true);
+            // Pide al usuario el número que servirá como clave de cifrado
+            System.out.println("Dime como quieres cifrar el mensaje");
+            // Lee el número entero introducido por el usuario
+            int clave = scanner.nextInt();
+            // Reinicializa el scanner para limpiar el buffer (evita problemas al leer texto después de un número)
+            scanner = new Scanner(System.in);
+            // Pide al usuario el texto que desea guardar
+            System.out.println("Dime que quieres guardar en el fichero");
+            // Lee la línea completa de texto introducida por el usuario
+            String mensaje = scanner.nextLine();
+
+            // Bucle que recorre cada carácter del mensaje introducido
+            for (int i = 0; i < mensaje.length(); i++) {
+                // Extrae el carácter en la posición actual 'i'
+                char letra = mensaje.charAt(i);
+                // Convierte el carácter a su valor numérico equivalente (código ASCII/Unicode)
+                int codigo = (int) letra;
+                // Multiplica el valor numérico por la clave y escribe el resultado como String en el archivo
+                fileWriter.write(String.valueOf(codigo * clave));
+                // Escribe un espacio en blanco para separar los números en el archivo
+                fileWriter.write(" ");
+            }
+
+        } catch (IOException e) {
+            // Captura posibles errores de entrada/salida (como que el archivo esté bloqueado o la ruta sea inválida)
+            System.out.println("error en la escritura del fichero");
+        } finally {
+            // Este bloque se ejecuta siempre, haya error o no, para asegurar el cierre de recursos
+            try {
+                // Intenta cerrar el flujo del archivo para liberar memoria y asegurar que los datos se guarden
+                fileWriter.close();
+            } catch (IOException | NullPointerException e) {
+                // Captura errores si el cierre falla o si el fileWriter nunca llegó a inicializarse
+                System.out.println("Error en el cerrado");
+            }
+        }
+    }
+
+    public void escrituraSalto(String path) {
+        File file = new File(path);
+        FileWriter fileWriter = null;
+        PrintWriter printWriter = null;
+        // BufferedWriter bufferedWriter;
+        try {
+            printWriter = new PrintWriter(new FileWriter(file));
+            printWriter.println("1Me imprime la linea dentro del fichero y luego salto de linea");
+            printWriter.println("2Me imprime la linea dentro del fichero y luego salto de linea");
+            printWriter.println("3Me imprime la linea dentro del fichero y luego salto de linea");
+            printWriter.println("4Me imprime la linea dentro del fichero y luego salto de linea");
+        } catch (IOException e) {
+            System.out.println("Fallo en el proceso de escritura");
+        } finally {
+            try {
+                printWriter.close();
+            } catch (Exception e) {
+                System.out.printf("Fallo en el proceso de cerrado con error %s", e.getMessage());
+            }
+        }
+    }
+
+    public void exportarUsuario(Usuario usuario) {
+        // me das un usuario y lo escribo en la ruta de exportacion
+        File file = new File("src/main/java/resources/usuarios.csv");
+        PrintWriter printWriter = null;
+        // el fichero no esta
+        // lo creas y escribes una linea
+
+        // el fichero si esta
+        // escribe el usuario
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+                printWriter = new PrintWriter(new FileWriter(file, true));
+                printWriter.println("nombre,apellido,dni");
+                // escribe el usuario //TODO el primero si no existe????
+                exportarUsuario(usuario);
+            } else {
+                printWriter = new PrintWriter(new FileWriter(file, true));
+                printWriter.println(usuario);
+            }
+        } catch (IOException e) {
+            System.out.println("Error en la creacion del fichero");
+        } finally {
+            try {
+                printWriter.close();
+            } catch (Exception e) {
+                System.out.println("Fallo en el cerrado");
+                System.out.println(e.getMessage());
+            }
+
+        }
+
+
+    }
+    public List<Usuario> importarUsuarios() {
+        File file = new File("src/main/java/resources/usuarios.csv");
+        BufferedReader reader = null;
+        List<Usuario> lista = new ArrayList<>();
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String linea = reader.readLine();
+            while ((linea = reader.readLine()) != null) {
+                String[] items = linea.split(","); // quiero pasarla a -> split -> usuario
+                Usuario usuario = new Usuario(items[0],items[1],items[2]);
+                lista.add(usuario);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Ruta incorrecta");
+            // dime otra ruta importarUsuarios(string)
+        } catch (IOException e) {
+            System.out.println("Error en la lectura");
+        }
+
+        return lista;
+    }
+
+    public void escribirObjeto(String path) {
+
+        // Se crea un objeto File que representa la ruta donde se guardará el archivo.
+        // OJO: Aquí todavía no se crea el archivo físicamente.
+        File file = new File(path);
+
+        // Se declara el ObjectOutputStream fuera del try para poder cerrarlo en el finally.
+        // Se inicializa en null porque aún no se ha creado.
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+
+            // Se crea un FileOutputStream asociado al archivo.
+            // Si el archivo no existe, lo crea. Si existe, lo sobrescribe.
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+            //Convierte este objeto completo en una secuencia de bytes lista para guardarse.
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            // Se crea una lista de tipo Usuario.
+            ArrayList<Usuario> lista = new ArrayList<>();
+
+            // Se crea un nuevo objeto Usuario y se añade a la lista.
+            lista.add(new Usuario("Usuario1", "Apellido1", "123A"));
+            // Se crea y añade un segundo objeto Usuario.
+            lista.add(new Usuario("Usuario2", "Apellido2", "223A"));
+
+            // Aquí ocurre la serialización real.
+            // writeObject convierte la lista en una secuencia de bytes OBJETO POR OBJETO
+            // y la escribe en el archivo.
+            objectOutputStream.writeObject(lista);
+
+        } catch (IOException e) {
+
+            // Si ocurre cualquier error de entrada/salida (archivo inexistente,
+            // permisos, fallo en escritura, etc.), se captura aquí.
+            System.out.println("Error en la escritura del fichero");
+
+        } finally {
+
+            // El bloque finally SIEMPRE se ejecuta, haya error o no.
+            // Sirve para liberar recursos.
+
+            try {
+
+                // Se cierra el ObjectOutputStream.
+                // Esto también cierra automáticamente el FileOutputStream interno.
+                objectOutputStream.close();
+
+            } catch (IOException | NullPointerException e) {
+
+                // IOException → si falla el cierre del stream.
+                // NullPointerException → si el stream nunca llegó a crearse
+                // (por ejemplo, si falló antes dentro del try).
+                System.out.println("Error en el cerrado");
+
+            }
+        }
+    }
+
+    public void lecturaObjeto(String path) {
+        File file = new File(path);
+        ObjectInputStream objectInputStream = null;
+
+        try {
+            objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            List<Usuario> lista = (List<Usuario>) objectInputStream.readObject();
+            lista.forEach(Usuario::mostrarDatos);
+        } catch (IOException e) {
+            System.out.println("Fichero no encontrado");
+            // nueva ruta lecturaObjeto(path)
+        } catch (ClassNotFoundException e) {
+            System.out.println("Clase no encontrada para la traduccion");
+        } catch (ClassCastException e){
+            System.out.println("Tipos incompatibles");
+        }
+
+
+    }
+
+}
+*/
