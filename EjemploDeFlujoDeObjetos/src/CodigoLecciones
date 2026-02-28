@@ -1,4 +1,4 @@
-/*import model.Usuario;
+import model.Usuario;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -323,4 +323,3 @@ import java.util.Scanner;
     }
 
 }
-*/
