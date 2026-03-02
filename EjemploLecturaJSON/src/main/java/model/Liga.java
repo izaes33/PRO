@@ -1,60 +1,45 @@
 package model;
 
-// Lombok es una librería que genera código automáticamente
-// en tiempo de compilación (getters, setters, constructores, etc.).
 import lombok.*;
+/* Lombok es una librería que genera código automáticamente
+en tiempo de compilación (getters, setters, constructores, etc.). */
 
-
-// Importamos Serializable.
-// Esta interfaz permite que los objetos de esta clase
-// puedan convertirse en una secuencia de bytes.
-// Esto es útil si quieres:
-// - Guardarlos en archivos
-// - Enviarlos por red
-// - Guardarlos en sesión
 import java.io.Serializable;
+/* Serializable es una interfaz que permite que los objetos de esta clase
+puedan convertirse en una secuencia de bytes. Esto es útil si quieres:
+Guardarlos en archivos; Enviarlos por red; Guardarlos en sesión */
 
 
-// @Getter hace que Lombok genere automáticamente
-// un método get para cada atributo privado.
-// Ejemplo: getIdLeague(), getStrLeague(), getStrSport()
 @Getter
+/* @Getter hace que Lombok genere automáticamente un método get
+para cada atributo privado. P. ej. -> getIdLeague(), getStrLeague(), getStrSport() */
 
-// @Setter hace que Lombok genere automáticamente
-// un método set para cada atributo privado.
-// Ejemplo: setIdLeague(...), setStrLeague(...)
 @Setter
+/* @Setter hace que Lombok genere automáticamente un método set
+para cada atributo privado. P. ej. -> setIdLeague(), setStrLeague(), setStrSport() */
 
-// @AllArgsConstructor genera un constructor con TODOS los atributos.
-// Ejemplo: new Liga(idLeague, strLeague, strSport)
 @AllArgsConstructor
+/* @AllArgsConstructor genera un constructor con TODOS los atributos.
+Ejemplo: new Liga(idLeague, strLeague, strSport) */
 
-// @NoArgsConstructor genera un constructor vacío.
-// Ejemplo: new Liga()
-// Esto es importante para que librerías como Gson puedan
-// crear objetos automáticamente.
 @NoArgsConstructor
+/* @NoArgsConstructor genera un constructor vacío. Ejemplo: new Liga()
+Esto es importante para que librerías como Gson puedan crear objetos automáticamente. */
 
-// Declaración de la clase Liga.
-// Implementa Serializable, lo que significa que puede serializarse.
 public class Liga implements Serializable {
+// Que la clase Liga Implemente Serializable, significa que puede serializarse.
 
-    // Declaramos tres atributos privados.
-    // Son privados para respetar el principio de encapsulación.
-    // Solo se accede a ellos mediante getters y setters.
     private String idLeague, strLeague, strSport;
+    /* Declaramos tres atributos privados para respetar el principio de encapsulación.
+    (Solo se accede a ellos mediante getters y setters). */
 
-    // Sobrescribimos el método toString() de la clase Object.
-    // Este método se ejecuta automáticamente cuando haces:
-    // System.out.println(liga);
     @Override
     public String toString() {
+        /* Sobrescribimos el método toString() de la clase Object.
+        Este método se ejecuta automáticamente cuando se hace
+        System.out.println(liga); */
 
-        // String.format permite crear un String formateado.
-        // "%s - %s" significa:
-        // primer %s -> idLeague
-        // segundo %s -> strLeague
-        // Ejemplo de salida: 4328 - Spanish La Liga
         return String.format("%s - %s", idLeague, strLeague);
+        // String.format permite crear un String formateado.
     }
 }

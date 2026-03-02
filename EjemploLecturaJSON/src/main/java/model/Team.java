@@ -7,6 +7,10 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+
+/* Para crear la clase Equipo con todos sus atributos hemos usado una página que se llama quicktype.io,
+en la que le hemos dado la estructura JSON de cada equipo que obtenemos de la api y le hemos indicado
+que queremos la clase en java, a lo cual nos la ha devuelto hecha para poder copiarla y pegarla. */
 public class Team {
     private String idStanding;
     private String intRank;

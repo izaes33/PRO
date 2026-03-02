@@ -60,11 +60,23 @@ public class APIController {
 
             HttpResponse<String> response = // Enviamos la petición al servidor.
                     client.send(request, HttpResponse.BodyHandlers.ofString());
-            /* client.send(...) hace la conexión real con la API.
-            BodyHandlers.ofString() indica que queremos la respuesta como String.
-            La API responde con un texto en formato JSON. */
+            /* HttpResponse es una clase que representa la respuesta completa que envía el servidor
+            después de hacerle una petición.
+            Esta respuesta no es solo el contenido (JSON), sino que incluye:
+            Código de estado: (Por ejemplo, 200 si todo fue bien, o 404 si no se encontró).
+            Cabeceras (Headers): Información sobre el tipo de contenido, la fecha, el servidor, etc.
+            Cuerpo (Body): El contenido real que pediste.
+            Los diamantes < > indican el tipo de dato en el que se ha convertido el cuerpo de la respuesta.
+            Aquí se usa String porque al hacer la petición se ha indicado HttpResponse.BodyHandlers.ofString().
+            client.send(...) hace la conexión real con la API. La API responde con un texto en formato JSON, y
+            BodyHandlers.ofString() indica que queremos la respuesta como String. */
             JSONObject objectLigas = new JSONObject(response.body());
-            // Creamos un JSONObject a partir del body (contenido) de la respuesta.
+            /* Creamos un JSONObject a partir del body (contenido) de la respuesta.
+            (la estructura JSON puede parecer un poco como muñecas rusas (una cosa dentro de otra)).
+            La respuesta de la API es un gran texto plano (un String) que parece JSON, pero para Java sigue siendo solo texto.
+            Al hacer new JSONObject(...), le estás diciendo a la librería org.json: "Toma este texto plano, analízalo y conviértelo
+            en una estructura de datos de Java que yo pueda consultar como un diccionario".
+            (Es un objeto que representa únicamente la lista de ligas que estaba guardada bajo la etiqueta "leagues" dentro de la respuesta).*/
             JSONArray arrayLigas = objectLigas.getJSONArray("leagues");
             /* Dentro del JSON recibido hay una clave llamada "leagues" que contiene un array (lista) de ligas.
             Extraemos ese array y lo guardamos en una variable de tipo JSONArray. */
@@ -167,6 +179,9 @@ public class APIController {
     }
 
     public void obtenerClasificacionCompleta(String id){
+        /* Este método hace lo mismo que el anterior pero estructura el imput de forma diferente:
+        Ya que el anterior recibe la tabla y opera desde ella; y este opera desde una clase Clasificacion
+        que es la tabla que contiene un array de teams, y separa los teams en otra clase */
         String urlClasificacion = urlBase + "lookuptable.php?l=" + id;
         try {
             Gson gson = new Gson();
