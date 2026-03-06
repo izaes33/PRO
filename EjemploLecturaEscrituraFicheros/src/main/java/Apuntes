@@ -1,0 +1,223 @@
+1========================================================
+ TEMA: FICHEROS Y FLUJOS (STREAMS) EN JAVA
+ ========================================================
+
+ 1. ¿QUÉ ES UN FICHERO?
+
+ Un fichero es un recurso del sistema operativo donde se
+ pueden almacenar datos de forma permanente.
+
+ Los programas Java pueden:
+ - Leer datos de un fichero
+ - Escribir datos en un fichero
+ - Crear ficheros
+ - Recorrer carpetas
+
+
+ ========================================================
+ 2. CLASE FILE
+ ========================================================
+
+ La clase File representa un archivo o carpeta del sistema.
+
+ IMPORTANTE:
+ File NO lee ni escribe datos.
+ Solo representa la ruta y permite consultar información.
+
+ Ejemplo:
+
+ File file = new File("ruta/del/fichero.txt");
+
+ Métodos importantes:
+
+ exists()          -> comprueba si el fichero existe
+ isFile()          -> comprueba si es un fichero
+ isDirectory()     -> comprueba si es una carpeta
+ length()          -> tamaño del fichero en bytes
+ getName()         -> nombre del fichero
+ getAbsolutePath() -> ruta completa
+ list()            -> lista nombres de archivos
+ listFiles()       -> lista objetos File
+ createNewFile()   -> crea el fichero
+
+
+ ========================================================
+ 3. QUÉ ES UN FLUJO (STREAM)
+ ========================================================
+
+ Un flujo es un canal de comunicación entre el programa
+ y un fichero.
+
+ Sirve para transportar datos.
+
+ Tipos principales:
+
+ Lectura  -> Input
+ Escritura -> Output
+
+ En texto se usan:
+
+ Reader -> leer caracteres
+ Writer -> escribir caracteres
+
+
+ ========================================================
+ 4. FLUJOS DE LECTURA
+ ========================================================
+
+ Los más usados:
+
+ FileReader
+ BufferedReader
+
+
+ FileReader
+ -----------
+
+ Lee caracteres directamente del fichero.
+
+ Ejemplo:
+
+ FileReader fr = new FileReader(file);
+
+ Método principal:
+
+ read()
+
+ Devuelve:
+ - código ASCII del carácter
+ - -1 cuando llega al final del fichero
+
+
+ BufferedReader
+ --------------
+
+ Se coloca encima de FileReader.
+
+ Ventajas:
+ - usa un buffer en memoria
+ - mejora el rendimiento
+ - permite leer líneas completas
+
+ Ejemplo:
+
+ BufferedReader br = new BufferedReader(new FileReader(file));
+
+ Método principal:
+
+ readLine()
+
+ Devuelve:
+ - String con la línea
+ - null cuando termina el fichero
+
+
+ ========================================================
+ 5. FLUJOS DE ESCRITURA
+ ========================================================
+
+ Los más usados:
+
+ FileWriter
+ PrintWriter
+
+
+ FileWriter
+ ----------
+
+ Permite escribir caracteres en un fichero.
+
+ Ejemplo:
+
+ FileWriter fw = new FileWriter(file);
+
+ Modo añadir contenido sin borrar:
+
+ FileWriter fw = new FileWriter(file, true);
+
+
+ PrintWriter
+ -----------
+
+ Permite escribir texto de forma más sencilla.
+
+ Ejemplo:
+
+ PrintWriter pw = new PrintWriter(new FileWriter(file));
+
+ Métodos útiles:
+
+ print()
+ println()
+
+
+ println() escribe texto y añade salto de línea.
+
+
+ ========================================================
+ 6. EXCEPCIONES AL TRABAJAR CON FICHEROS
+ ========================================================
+
+ FileNotFoundException
+
+ Se produce cuando:
+ - el fichero no existe
+ - la ruta es incorrecta
+
+
+ IOException
+
+ Error general de entrada/salida:
+
+ - permisos insuficientes
+ - error de disco
+ - error de lectura/escritura
+
+
+ ========================================================
+ 7. CIERRE DE FLUJOS
+ ========================================================
+
+ Siempre se debe cerrar un flujo después de usarlo.
+
+ close()
+
+ Se hace normalmente dentro de un bloque finally
+ para garantizar que siempre se cierre.
+
+ Si no se cierra:
+
+ - puede quedar bloqueado el archivo
+ - se pueden producir fugas de memoria
+
+
+
+ ========================================================
+ 9. CIFRADO USADO EN ESTE EJEMPLO
+ ========================================================
+
+ El código usa un cifrado simple basado en ASCII.
+
+ Proceso de cifrado:
+
+ 1. Convertir cada carácter a su código ASCII
+ 2. Multiplicarlo por una clave
+
+ codigo = letra * clave
+
+
+ Proceso de descifrado:
+
+ 1. Leer el número
+ 2. Dividir entre la clave
+
+ letra = codigo / clave
+
+ Después se convierte de nuevo a carácter.
+
+ ========================================================
+ */
+
+ public class Operaciones {
+
+
