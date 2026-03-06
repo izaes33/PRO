@@ -1,0 +1,13 @@
+Crea un programa que defina un array de 5 elementos con números enteros. Pide al usuario una posición del array
+y muestra el elemento en esa posición. Usa try-catch para capturar la excepción ArrayIndexOutOfBoundsException
+si el usuario introduce un índice inválido.
+
+Ejemplo de salida por consola:
+
+Array: [10, 20, 30, 40, 50]
+Introduce la posición (0-4): 2
+Elemento en posición 2: 30
+
+Array: [10, 20, 30, 40, 50]
+Introduce la posición (0-4): 7
+Error: Posición fuera de los límites del array

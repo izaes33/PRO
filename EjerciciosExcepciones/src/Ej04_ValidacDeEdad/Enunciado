@@ -1,0 +1,14 @@
+Crea una clase EdadInvalidaException que herede de Exception. Crea un método validarEdad(int edad) que lance
+esta excepción si la edad es menor que 0 o mayor que 120. En el método main, pide al usuario su edad y usa
+try-catch para capturar y manejar la excepción personalizada.
+
+Ejemplo de salida por consola:
+
+Introduce tu edad: -5
+Error: La edad no puede ser negativa
+
+Introduce tu edad: 150
+Error: La edad no puede ser mayor que 120
+
+Introduce tu edad: 25
+Edad válida: 25 años
