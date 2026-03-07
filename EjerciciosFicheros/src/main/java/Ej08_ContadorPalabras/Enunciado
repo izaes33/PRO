@@ -1,0 +1,12 @@
+Desarrolla una aplicación que lea un archivo de texto y cuente cuántas palabras contiene.
+El programa debe mostrar también cuáles son las 5 palabras más frecuentes y cuántas veces aparece cada una.
+Ignora signos de puntuación y trata las palabras sin distinguir entre mayúsculas y minúsculas.
+
+Ejemplo de entrada:
+Archivo: C:/Datos/articulo.txt
+
+Contenido del archivo:
+
+Java es un lenguaje de programación muy popular. Java se utiliza para desarrollar aplicaciones web,
+aplicaciones móviles y aplicaciones de escritorio. Java es un lenguaje orientado a objetos que fue
+diseñado para tener la menor cantidad posible de dependencias de implementación.

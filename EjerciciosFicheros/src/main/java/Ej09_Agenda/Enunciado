@@ -1,0 +1,7 @@
+Crea una aplicación que permita gestionar una agenda de contactos. Para ello crea una clase Usuario
+que tenga las características: nombre, apellido, dni. Además de esta clase, crea un main que permita
+gestionar los usuarios, con las siguientes opciones:
+
+1. Agregar usuario: pedirá por consola todos los datos
+2. Listar usuarios: mostrará por consola todos los usuarios del sistema
+3. Exportar usuarios: guardará en un fichero .txt todos los usurios de la lista

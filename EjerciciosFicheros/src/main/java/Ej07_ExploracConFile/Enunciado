@@ -1,0 +1,13 @@
+Crea un programa que solicite al usuario una ruta de directorio y muestre una lista de todos
+los archivos y subdirectorios contenidos en él. Para cada elemento, indica si es un archivo o un directorio,
+su tamaño en bytes (si es un archivo) y la fecha de última modificación.
+
+**Ejemplo de entrada:**
+Ruta: C:/Users/usuario/Documents
+
+**Ejemplo de salida:**
+Directorio: C:/Users/usuario/Documents
+- [ARCHIVO] informe.pdf (245678 bytes) - Última modificación: 23/09/2025 09:45
+- [DIRECTORIO] Proyectos - Última modificación: 20/09/2025 14:30
+- [ARCHIVO] presupuesto.xlsx (35420 bytes) - Última modificación: 15/09/2025 11:20
+- [DIRECTORIO] Imágenes - Última modificación: 10/09/2025 1
