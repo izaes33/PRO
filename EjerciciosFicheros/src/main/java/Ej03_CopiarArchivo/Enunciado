@@ -1,0 +1,9 @@
+Crea un programa que copie el contenido de un archivo a otro. El programa debe solicitar
+al usuario la ruta del archivo de origen y la ruta del archivo de destino.
+
+**Ejemplo de entrada:**
+Archivo de origen: C:/Datos/original.txt
+Archivo de destino: C:/Datos/copia.txt
+
+**Ejemplo de salida:**
+El archivo ha sido copiado correctamente.

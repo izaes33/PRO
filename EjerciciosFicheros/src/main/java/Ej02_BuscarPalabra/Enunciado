@@ -1,0 +1,9 @@
+Escribe un programa que busque cuántas veces aparece una palabra específica en un archivo de texto.
+El usuario debe introducir la ruta del archivo y la palabra a buscar.
+
+**Ejemplo de entrada:**
+Ruta del archivo: C:/Datos/articulo.txt
+Palabra a buscar: Java
+
+**Ejemplo de salida:**
+La palabra "Java" aparece 7 veces en el archivo.
