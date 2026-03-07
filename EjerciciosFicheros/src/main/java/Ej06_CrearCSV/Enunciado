@@ -1,0 +1,12 @@
+Escribe un programa que cree un archivo CSV (valores separados por comas) con información de 3 estudiantes.
+Para cada estudiante, guarda su nombre, edad y calificación. Luego, lee el archivo y muestra su contenido
+en la consola.
+
+**Ejemplo de salida:**
+Archivo CSV creado correctamente.
+
+Contenido del archivo:
+Nombre,Edad,Calificación
+Ana García,20,8.5
+Carlos Martín,19,7.2
+Laura Pérez,21,9.3

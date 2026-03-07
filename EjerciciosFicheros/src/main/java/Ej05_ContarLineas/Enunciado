@@ -1,0 +1,8 @@
+Desarrolla un programa que cuente el número de líneas que contiene un archivo de texto.
+El programa debe solicitar al usuario la ruta del archivo a analizar.
+
+**Ejemplo de entrada:**
+Introduce la ruta del archivo: C:/Datos/poema.txt
+
+**Ejemplo de salida:**
+El archivo contiene 14 líneas.

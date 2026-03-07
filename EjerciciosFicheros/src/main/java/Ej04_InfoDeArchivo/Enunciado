@@ -1,0 +1,14 @@
+Desarrolla un programa que obtenga y muestre información detallada sobre un archivo
+especificado por el usuario, como su tamaño, fecha de última modificación, permisos de lectura/escritura
+y si es un archivo oculto o no.
+
+**Ejemplo de entrada:**
+Introduce la ruta del archivo: C:/Datos/informe.pdf
+
+**Ejemplo de salida:**
+Información del archivo C:/Datos/informe.pdf:
+- Tamaño: 2456789 bytes (2.3 MB)
+- Última modificación: 05/10/2025 14:32:45
+- Permisos: Lectura (sí), Escritura (sí), Ejecución (no)
+- Archivo oculto: no
+- Ruta absoluta: C:/Datos/informe.pdf
