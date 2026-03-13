@@ -1,0 +1,46 @@
+# Teoría: Consultas a APIs, JSON manual y Java Streams
+
+## 1. Peticiones HTTP en Java (HttpClient)
+Desde Java 11, el lenguaje incluye una forma moderna de comunicarse con internet:
+`HttpClient`. El proceso siempre sigue 4 pasos:
+1. **Cliente (`HttpClient`)**: Es el "navegador" invisible que ejecutará la acción.
+2. **Petición (`HttpRequest`)**: Es el "sobre" de la carta. Aquí configuramos a qué URL queremos ir.
+3. **Envío (`client.send`)**: Mandamos la petición a internet y esperamos.
+4. **Respuesta (`HttpResponse`)**: Es lo que nos devuelve el servidor
+(normalmente un texto largo que contiene el JSON).
+
+
+## 2. Lectura manual de JSON (`org.json`)
+A diferencia de Jackson (que mapea el JSON automáticamente a tus clases Producto),
+la librería org.json te obliga a navegar por el texto JSON de forma manual, como si buscaras en un diccionario.
+Imagina que el JSON es un archivo de carpetas anidadas:
+Usas JSONObject para leer cosas entre llaves {} y JSONArray para listas entre corchetes [].
+* **`JSONObject`**: Representa todo lo que va entre llaves `{}`. Es un diccionario de Clave -> Valor.
+Usamos métodos como `.getString("clave")` o `.getInt("clave")` para sacar sus datos.
+* **`JSONArray`**: Representa todo lo que va entre corchetes `[]`. Es una lista de elementos.
+Usamos `.getJSONObject(posición)` para sacar un elemento concreto de la lista.
+
+Nota: en la práctica, con Jackson configurado, es mucho mejor usar Jackson para todo.
+
+
+
+## 3. Java Streams y Expresiones Lambda
+La API de Streams (Java 8+) sirve para procesar colecciones (como Listas) de forma rápida y legible.
+En lugar de usar bucles `for` gigantes, creamos una "tubería" de operaciones:
+* **`stream()`**: Abre la tubería para que los datos empiecen a fluir.
+* **`filter(condición)`**: Filtra los datos. La *condición* se escribe con una función Lambda
+(ej: `p -> p.getPrecio() > 10`). La flecha `->` significa "dado este elemento `p`, comprueba esto".
+* **`forEach(acción)`**: Realiza una acción final por cada elemento que haya sobrevivido en la tubería.
+
+Operaciones clave:
+filter(): Se queda solo con los elementos que cumplen una condición.mapToDouble():
+Extrae un dato numérico (ej. el precio) de cada objeto para hacer cálculos.
+anyMatch(): Devuelve true si al menos uno cumple la condición.forEach():
+Ejecuta una acción para cada elemento.
+Llamadas HTTP Nativas (HttpClient):Antes, para conectarse a una web desde Java, había que usar librerías externas
+o clases muy antiguas. Desde Java 11, existe HttpClient, que es una forma estándar y moderna de hacer peticiones web
+(como lo haría un navegador o Postman). El flujo básico es:
+Crear un Cliente (HttpClient) $\rightarrow$
+Crear una Petición (HttpRequest) con la URL $\rightarrow$
+Enviar la petición y recibir una Respuesta (HttpResponse) $\rightarrow$
+Leer el cuerpo (body) de la respuesta.
