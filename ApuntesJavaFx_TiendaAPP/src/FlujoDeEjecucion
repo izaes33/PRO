@@ -1,0 +1,32 @@
+1-El Arranque (Launcher): ->> Java entra por el método main de la clase Launcher.
+Este método llama a Application.launch().
+
+2-Preparando el Escenario: ->>
+(HelloApplication): El motor llama al método start(). Aquí entra en juego el FXMLLoader.
+Este objeto lee el archivo form-view.fxml.
+
+3-Construcción de la Vista (Bambalinas): ->> Al leer el XML,
+JavaFX empieza a crear los objetos visuales en la memoria: crea los campos de texto ,
+los botones, etc.
+
+4-Inyección del Controlador: ->> El FXML  dice que su controlador es FormController.
+JavaFX crea una instancia de esa clase y empieza a "enchufar" los objetos gráficos que acaba de
+crear en las variables marcadas con @FXML.
+
+5-La Inicialización (initialize): ->> Una vez que todo está enchufado, JavaFX llama a initialize().
+- Primero va a instances(), creando la configuración del spinner, la lista de perfiles y la sombra.
+- Luego va a initGUI(), inyectando esa configuración en el spinner,
+agrupando los radio buttons y metiendo los perfiles en el ChoiceBox.
+- Finalmente, va a actions(), dejando a los botones en "modo espera", con las orejas abiertas
+(los Listeners y EventHandlers asginados) esperando a que el usuario haga algo.
+
+6-Mostrar en Pantalla: ->> El código vuelve a HelloApplication, se mete la
+escena en el escenario (Stage) y se hace visible con stage.show().
+
+7-Interacción (El Bucle de Eventos): ->>
+El programa se queda aquí, escuchando. Si el usuario mueve el ratón sobre el botón "Agregar",
+se dispara el evento MOUSE_ENTERED. El sistema va a tu clase ManejoRaton, entra al método
+handle, comprueba con getSource() que fue el botón "Agregar", y le aplica la sombra.
+
+8-El Final: ->> El programa sigue esperando y reaccionando a eventos hasta que el usuario
+pulsa la 'X' roja de la ventana. En ese momento, el motor de JavaFX se apaga y el programa termina.

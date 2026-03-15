@@ -1,0 +1,238 @@
+Para entender cómo cambiar de pantalla, primero hay que recordar la metáfora del teatro que usa JavaFX :
+-Stage (El Escenario):  -> Es la ventana física del sistema operativo
+(la que tiene los botones de minimizar, maximizar y cerrar).
+-Scene (La Escena):     -> Es el contenido que pones dentro de la ventana
+(el FXML con sus botones, textos, etc.).
+Por lo tanto, cuando decimos "cambiar de ventana", en realidad podemos referirnos a dos cosas distintas:
+
+
+1. --Cambiar de Escena en la misma Ventana (Navegación normal)->>
+Esto es lo que se hace al pasar de una pantalla de Login al Menú Principal. (No se abre una ventana nueva,
+sino que se quita el decorado y se pone uno nuevo en el mismo escenario.
+
+// Importaciones necesarias que suele pedir JavaFX
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
+
+/*
+ * Este código iría dentro del Controlador (ej. MainController),
+ * típicamente dentro del initialize() asignado a un botón con un setOnAction,
+ * o en un método anotado con @FXML si se usa Scene Builder para los Action Events.
+ */
+btnIrAlFormulario.setOnAction(event -> {
+    try {
+        // 1. Preparamos el "traductor" apuntando al nuevo archivo FXML que queremos abrir
+        // NOTA: Ajusta "HelloApplication.class" a la clase principal de tu proyecto
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("form-view.fxml"));
+
+        // 2. Cargamos el FXML y creamos la nueva Escena
+        Scene nuevaEscena = new Scene(fxmlLoader.load());
+
+        // 3. Necesitamos saber en qué ventana (Stage) estamos actualmente.
+        // Como el evento lo ha disparado un botón, le preguntamos al botón en qué ventana está.
+        Node origen = (Node) event.getSource(); // El botón que se ha pulsado
+        Stage ventanaActual = (Stage) origen.getScene().getWindow(); // La ventana del botón
+
+        // 4. Le cambiamos la escena a la ventana actual y le podemos cambiar el título
+        ventanaActual.setTitle("Formulario de Registro");
+        ventanaActual.setScene(nuevaEscena);
+
+    } catch (IOException e) {
+        // Si me equivoco en el nombre del FXML, saltará este error por consola
+        System.out.println("Error al cargar la nueva vista: " + e.getMessage());
+        e.printStackTrace();
+    }
+});
+
+
+2. Abrir una Ventana (Stage) completamente nueva
+Esto es útil cuando se quiere abrir una ventana emergente (por ejemplo, una pantalla de "Ayuda"
+o "Configuración") y se quiere que la ventana anterior siga abierta por detrás.
+
+// Importaciones necesarias
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
+
+btnAbrirAyuda.setOnAction(event -> {
+    try {
+        // 1. Preparamos el FXML de la nueva vista
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
+        Scene nuevaEscena = new Scene(fxmlLoader.load());
+
+        // 2. En lugar de buscar la ventana actual, ¡CREAMOS UNA NUEVA!
+        Stage nuevaVentana = new Stage();
+
+        // 3. Configuramos la nueva ventana
+        nuevaVentana.setTitle("Pantalla de Ayuda");
+        nuevaVentana.setScene(nuevaEscena);
+
+        // 4. Mostramos la nueva ventana
+        nuevaVentana.show();
+
+        /* * OPCIONAL: Si se quisiera CERRAR la ventana vieja después de abrir la nueva,
+         * se podría hacer:
+         * * Node origen = (Node) event.getSource();
+         * Stage ventanaVieja = (Stage) origen.getScene().getWindow();
+         * ventanaVieja.close();
+         */
+
+    } catch (IOException e) {
+        System.out.println("Error al cargar la ventana secundaria: " + e.getMessage());
+    }
+});
+
+------------------------------------------------------------------------------------------
+
+La parte más "mágica" y útil de JavaFX es hacer que dos pantallas hablen entre sí.
+Para que esto funcione, el truco no está en el FXML, sino en obtener la instancia del controlador
+de la pantalla de destino justo antes de mostrarla mediante paso de datos entre controladores.
+Para pasar datos (como un objeto User o un simple String), necesitamos un método "puente" en el
+controlador de destino.
+
+
+1. -Preparar el Controlador de Destino (MainController.java)->> Primero, creamos un método público
+que reciba lo que queremos pasar.
+public class MainController {
+
+    @FXML private Text textoBienvenida;
+
+    // MÉTODO PUENTE:
+    public void setDatos(String nombreUsuario) {
+        this.textoBienvenida.setText("Bienvenido, " + nombreUsuario);
+    }
+}
+
+
+2. -Lógica en el Controlador de Origen (FormController.java)->> Aquí es donde ocurre la conexión.
+El secreto es no usar fxmlLoader.load() a secas, sino separar el proceso para hablar
+con el controlador.
+
+btnEnviar.setOnAction(event -> {
+    try {
+        // 1. Creamos el cargador y le decimos qué FXML queremos
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/tiendaapp/main-view.fxml"));
+
+        // 2. ¡IMPORTANTE! Cargamos el contenido (Parent)
+        // pero NO lo metemos directamente en una Scene aún.
+        Parent root = loader.load();
+
+        // 3. PEDIMOS EL CONTROLADOR al cargador.
+        // JavaFX ya ha instanciado MainController automáticamente al hacer el .load()
+        MainController controladorDestino = loader.getController();
+
+        // 4. PASAMOS LOS DATOS usando el método puente que creamos antes
+        String nombre = editNombre.getText();
+        controladorDestino.setDatos(nombre);
+
+        // 5. Ahora sí, creamos la escena con el 'root' que ya tiene los datos inyectados
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+});
+
+
+-Resumen del Flujo de Comunicación: -->
+Paso    Acción                                                      ¿Dónde se hace?
+1       Crear un método public para recibir datos.                  Controlador Destino
+2       Instanciar FXMLLoader con el recurso.                       Controlador Origen
+3       Llamar a loader.load() (esto crea el controlador destino).  Controlador Origen
+4       Llamar a loader.getController().                            Controlador Origen
+5       Usar el método del paso 1 sobre el objeto del paso 4.       Controlador Origen
+
+------------------------------------------------------------------------------------------
+
+**Si la aplicación es muy grande y muchas pantallas necesitan acceder al mismo User
+(el usuario logueado, por ejemplo), a veces es mejor crear una clase intermedia
+usando el patrón "Singleton" o "Data Holder"
+(Clase estática para compartir datos de forma global.
+(Útil si no quieres andar pasando el objeto de controlador en controlador).
+public class SessionData {
+    private static User usuarioLogueado;
+
+    public static void setUsuario(User u) { usuarioLogueado = u; }
+    public static User getUsuario() { return usuarioLogueado; }
+}
+En la Pantalla A: SessionData.setUsuario(miUsuario);
+En la Pantalla B: User u = SessionData.getUsuario();
+
+------------------------------------------------------------------------------------------
+
+El concepto de Ventana Modal es fundamental para controlar el flujo de una aplicación.
+Imaginemos que el usuario intenta cerrar el programa sin guardar y queremos que aparezca
+un aviso y que el usuario tenga que interactuar con él antes de seguir tocando la ventana
+principal. La "modalidad" define si una ventana bloquea  o no a las demás.
+
+Javaimport javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+/*
+ * APUNTE: Cómo abrir una ventana Modal (que bloquea la principal).
+ */
+btnAbrirAviso.setOnAction(event -> {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dialog-view.fxml"));
+        Scene escenaModal = new Scene(loader.load());
+
+        Stage ventanaModal = new Stage();
+        ventanaModal.setScene(escenaModal);
+        ventanaModal.setTitle("Aviso importante");
+
+        // --- CONFIGURACIÓN DE MODALIDAD ---
+
+        // 1. APPLICATION_MODAL: Bloquea TODAS las ventanas de la aplicación
+        // hasta que esta se cierre. Es la más común para avisos.
+        ventanaModal.initModality(Modality.APPLICATION_MODAL);
+
+        // 2. initOwner: Le decimos quién es su "padre".
+        // Es buena práctica para que la ventana aparezca centrada respecto a la principal.
+        Stage ventanaPrincipal = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        ventanaModal.initOwner(ventanaPrincipal);
+
+        // 3. StageStyle (Opcional): Podemos quitar los botones de cerrar/minimizar
+        // ventanaModal.initStyle(StageStyle.UTILITY);
+
+        // IMPORTANTE: Usamos showAndWait() en lugar de show()
+        // El código de este método se "pausará" aquí hasta que el usuario cierre la modal.
+        ventanaModal.showAndWait();
+
+        System.out.println("La ventana modal se ha cerrado y el código sigue ejecutándose...");
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+});
+
+
+Diferencias clave:
+-show():                    -> Abre la ventana y el código del controlador sigue corriendo inmediatamente.
+Pudiendo interactuar con ambas ventanas a la vez (ventanas independientes).
+-showAndWait():             -> Abre la ventana y detiene la ejecución del método actual.
+Es ideal para cuando se espera que el usuario tome una decisión (como un "Aceptar/Cancelar")
+para luego procesarla.
+-Modality.NONE:             -> (Por defecto) No bloquea nada.
+-Modality.WINDOW_MODAL:     -> Solo bloquea a la ventana "dueña" (initOwner), pero si se tuvieran otras
+ventanas abiertas, se podrían tocar.
+-Modality.APPLICATION_MODAL: -> Bloquea toda la aplicación. Nada se mueve hasta que el usuario responda.
+
+
+Resumen:
+Objetivo                Herramienta                     Acción Clave
+Cambiar de pantalla     stage.setScene(nuevaEscena)     Reemplaza el contenido.
+Abrir ventana extra     new Stage() + show()            Dos ventanas libres.
+Abrir diálogo/alerta    initModality + showAndWait()    Obliga a responder al usuario.
+Pasar datos             loader.getController()          Llamar a métodos del destino antes del show.

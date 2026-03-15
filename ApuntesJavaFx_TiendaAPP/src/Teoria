@@ -1,0 +1,40 @@
+En JavaFX, el controlador es el "cerebro" detrás de la "cara" (el archivo FXML). Cuando
+declaras variables con @FXML, estás diciendo: "Oye JavaFX, busca en el FXML  un elemento
+con este ID y conéctalo a esta variable". Una vez conectados, tienes que darles comportamiento.
+
+-- El método initialize y la organización del código ->>
+El método initialize(URL location, ResourceBundle resources) es fundamental. Es un método que
+JavaFX llama automáticamente justo después de que la vista FXML se ha cargado por completo y
+las variables @FXML ya están vinculadas.
+En el código, dentro de initialize, se llama a tres métodos para mantener el código limpio:
+- instances():  -> Se usa para crear los objetos que no vienen de la vista
+    (como listas, grupos de botones, o configuraciones).
+- initGUI():    -> Se usa para aplicar esas configuraciones a los elementos visuales.
+- actions():    -> Se usa para decirle a los botones qué hacer cuando interactúen con ellos.
+
+-- Dando funcionalidad: Eventos Simples (setOnAction) ->>
+Cuando se quiere que un botón haga algo al pulsarlo, se usa setOnAction. Esto espera un
+"Escuchador de Eventos" (Event Handler). Hoy en día, en Java, esto se escribe usando una
+función lambda (event -> { ... }), que básicamente dice: "Cuando ocurra la acción principal
+de este elemento (un clic en un botón), ejecuta este bloque de código".
+
+-- Dando funcionalidad: Eventos Compartidos (EventHandler y event.getSource()) ->>
+A veces, varios botones hacen cosas parecidas (por ejemplo, iluminarse al pasar el ratón).
+En lugar de escribir el mismo código tres veces, se crea una clase interna (como ManejoRaton)
+que implementa --EventHandler<MouseEvent>--.
+- handle:               -> Es el método obligatorio que debes reescribir. Es la caja donde metes
+la lógica de "qué hacer".
+- event.getSource():    -> Como este escuchador se pone a varios botones, cuando ocurra el evento,
+el programa necesita saber quién lo ha provocado. --getSource()-- te devuelve exactamente
+el elemento que disparó el evento (por ejemplo, el botón "Comprobar").
+
+-- Componentes Especiales: Modelos y Grupos ->>
+No todos los elementos son tan simples como un botón. Algunos necesitan "modelos" para funcionar:
+- SpinnerValueFactory:                  -> Un Spinner  es un selector numérico. Por sí solo no sabe si
+debe contar del 1 al 10 o del 100 al 1000. El -ValueFactory- le da esas reglas (en este caso, de 18 a 90 años).
+- ToggleGroup:                          -> Ante dos botones de radio (Masculino y Femenino). Para que al
+seleccionar uno se deseleccione el otro, deben pertenecer al mismo "grupo". Para eso se instancia un
+-ToggleGroup- y se añaden ambos a él.
+- getSelectionModel().getSelectedItem(): -> Elementos como los ChoiceBox o ComboBox tienen listas de opciones.
+Para saber qué ha elegido el usuario, no puedes pedir el texto directamente; primero pides el
+"modelo de selección" y luego el "ítem seleccionado".
