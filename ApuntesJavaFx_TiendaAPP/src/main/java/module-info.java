@@ -2,6 +2,8 @@ module org.example.tiendaapp {
     requires javafx.controls;
     requires javafx.fxml;
     requires static lombok;
+    requires java.net.http;
+    requires com.google.gson;
 
 
     opens org.example.tiendaapp to javafx.fxml;

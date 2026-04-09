@@ -1,0 +1,43 @@
+1. EL ALMACÉN CENTRAL: DataSet (Persistencia en Memoria)
+La clase DataSet no es un controlador ni una vista; es el Repositorio de Datos.
+ - El concepto 'Static':    -> Al declarar la lista de usuarios como static, hacemos que esa lista pertenezca
+a la aplicación entera y no a una ventana concreta. Esto permite que el FormController guarde un usuario y el
+LoginController pueda "verlo" inmediatamente.
+ - ObservableList:  -> Es una lista especial de JavaFX. Su "magia" es que avisa a cualquier componente visual
+(como un ListView) cuando algo cambia. Si añades un usuario al DataSet, la interfaz se refresca sola.
+ - Programación Funcional (Streams):    -> El método getLogin usa filtros modernos para buscar datos.
+En lugar de recorrer la lista con un bucle for antiguo, usamos un "flujo" (stream) que filtra y encuentra al
+usuario de forma mucho más rápida y limpia.
+
+2. EL MOLDE DE DATOS: Product (POJO y Modelado)
+La clase Product es lo que llamamos un POJO (Plain Old Java Object). Es el molde que define qué es un producto.
+ - Lombok (@Data):  -> Es una herramienta de productividad. Al poner @Data, Java genera automáticamente los métodos
+que siempre necesitamos (Getters, Setters, toString). Esto mantiene el código limpio y enfocado en los datos,
+no en la "basura" repetitiva.
+ - Enums (Seguridad de Tipos):  -> En lugar de usar texto libre (String) para categorías o políticas de devolución,
+usamos Enums. Esto obliga al programa a usar solo valores válidos (como BEAUTY o FRAGRANCES), evitando errores de
+escritura que romperían la app.
+ - Composición de Objetos:  -> Un producto es complejo. Para no tener una clase de 500 líneas, usamos la composición:
+delegamos las dimensiones a la clase Dimensions y las reseñas a la clase Review. Esto se llama Separación de
+Responsabilidades.
+
+3. EL SOBRE DE ENVÍO: ProductResponse (El patrón DTO)
+Cuando pedimos datos a una API (como DummyJSON), la información no llega "suelta". Llega en un paquete o "sobre".
+ - Wrapper (Envoltorio):    -> Las APIs suelen enviar metadatos (total de productos, cuántos te has saltado, etc.)
+además de la lista real de productos. ProductResponse es la clase encargada de recibir ese "sobre" completo.
+ - Mapeo con GSON:      -> La librería GSON lee el texto JSON que viene de Internet y busca una clase que tenga
+los mismos nombres de variables. ProductResponse actúa como el mapa que le dice a GSON dónde guardar cada dato.
+ - Desacoplamiento:     -> Al usar esta clase, protegemos nuestra lógica. Si la API cambia la forma en que envía
+los datos, solo tenemos que tocar este "sobre" y no toda la lógica de la tienda.
+
+RESUMEN DEL FLUJO DE INFORMACIÓN
+- Petición:     -> El TiendaController pide datos a la nube.
+- Transporte:   -> La nube responde con un JSON que cae dentro de un ProductResponse.
+- Extracción:   -> Sacamos la lista de Product que hay dentro de ese sobre.
+- Uso:  -> Esos productos se envían a la tabla de la interfaz.
+- Consulta:     -> Si el usuario intenta comprar, el sistema consulta al DataSet para verificar quién está logueado y qué permisos tiene.
+
+** Concepto clave: Esta estructura sigue el principio de Separación de Concernimientos
+(Separation of Concerns). Los datos no saben cómo se ven (Modelo), la vista no sabe de dónde vienen los datos (FXML)
+y el controlador es el mediador que los conecta.
+(MVC (Modelo-Vista-Controlador) es un patrón arquitectónico específico que aplica ese principio).

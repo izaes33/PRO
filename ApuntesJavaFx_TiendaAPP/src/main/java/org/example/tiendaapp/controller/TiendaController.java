@@ -50,6 +50,7 @@ public class TiendaController implements Initializable {
     /**
      * LA TABLA (TableView):
      * Es el componente principal de esta vista. Visualiza una lista de productos.
+     * (Es el contenedor principal que dibujará la lista de productos).
      */
     @FXML private TableView<Product> tablaProductos;
 
@@ -58,15 +59,15 @@ public class TiendaController implements Initializable {
     /**
      * LISTA OBSERVABLE DE PRODUCTOS:
      * Aquí almacenaremos los productos que traigamos de Internet.
-     * Al ser Observable, cualquier cambio aquí se reflejará en la tabla automáticamente.
+     * Al ser Observable, cualquier cambio aquí se reflejará en la tabla automáticamente,
+     * y ésta se enterará automáticamente cuando los productos terminen de descargarse de Internet.
      */
     private ObservableList<Product> listProducts;
 
     /**
-     * LISTA FILTRADA:
-     * Es un "envoltorio" (wrapper) sobre la lista original.
-     * Permite mostrar solo los elementos que cumplan un criterio (ej: buscar por nombre)
-     * sin borrar permanentemente los datos de la lista principal.
+     * LISTA FILTRADA (Wrapper):
+     * Esta lista "envuelve" a la anterior. Permite aplicar filtros de búsqueda
+     * (por ejemplo, buscar por nombre) sin borrar los datos originales.
      */
     private FilteredList<Product> listFilter;
 
@@ -83,25 +84,24 @@ public class TiendaController implements Initializable {
      * instances(): Inicializa los contenedores de datos.
      */
     private void instances() {
-        // Creamos la lista vacía que recibirá los datos de la API
+// Inicializamos la lista que contendrá los productos de la API
         listProducts = FXCollections.observableArrayList();
     }
 
     /**
-     * initGUI(): Configura la "fontanería" entre la tabla y el modelo de datos.
+     * initGUI(): Configura la conexión entre la tabla y el modelo de datos.
      */
     private void initGUI() {
         /**
-         * CONEXIÓN COLUMNA-ATRIBUTO (PropertyValueFactory):
-         * Este es el "pegamento". Le dice a la columna:
-         * "Busca en la clase Product un método que se llame getTitle() para rellenar tus celdas".
-         * Es CRUCIAL que el nombre entre comillas coincida con el atributo del modelo.
+         * PROPERTY VALUE FACTORY (El Pegamento):
+         * Este método conecta la columna visual con el atributo del objeto Java.
+         * "title" debe coincidir exactamente con el nombre de la variable en la clase Product.
          */
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("title"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("price"));
         columnaStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
-        // Enlazamos la tabla con nuestra lista observable de productos
+        // Enlazamos la tabla con nuestra lista observable.
         tablaProductos.setItems(listProducts);
     }
 
@@ -114,10 +114,10 @@ public class TiendaController implements Initializable {
 
         btnCompra.setOnAction(event -> {
             /**
-             * NOTA SOBRE MULTIHILO (Thread/Task):
-             * Las operaciones de red (como cargar JSON) pueden "congelar" la interfaz.
-             * JavaFX recomienda usar Task y Thread para que la UI siga respondiendo
-             * mientras los datos se descargan de fondo.
+             * NOTA SOBRE HILOS (Threads):
+             * Las peticiones a Internet pueden "congelar" la interfaz si tardan mucho.
+             * Aunque aquí se hace de forma directa, lo ideal es usar un Task o Thread
+             * para que la ventana no se quede bloqueada mientras descarga.
              */
             /*
             loadJSONProducts();
@@ -134,8 +134,8 @@ public class TiendaController implements Initializable {
     }
 
     /**
-     * loadJSONProducts(): El "motor" de red de la aplicación.
-     * Conecta con una API externa para obtener productos en formato JSON.
+     * loadJSONProducts(): El motor de conexión.
+     * Se conecta a una URL, descarga un JSON y lo convierte en objetos Java.
      */
     private void loadJSONProducts() {
         // 1. Creamos el cliente que hará la petición
@@ -162,7 +162,7 @@ public class TiendaController implements Initializable {
             Gson gson = new Gson();
             ProductResponse responseProduct = gson.fromJson(body, ProductResponse.class);
 
-            // 4. Actualizamos la lista observable. La tabla se refresca sola al detectar el cambio.
+            // 4. Actualizamos la lista. ¡La tabla se refresca sola al ser Observable!
             listProducts.setAll(responseProduct.getProducts());
 
         } catch (IOException e) {

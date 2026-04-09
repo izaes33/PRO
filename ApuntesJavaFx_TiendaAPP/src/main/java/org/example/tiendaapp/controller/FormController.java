@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.example.tiendaapp.HelloApplication;
-import org.example.tiendaapp.data.DataSet;
+import data.DataSet;
 import org.example.tiendaapp.model.User;
 
 import java.io.IOException;

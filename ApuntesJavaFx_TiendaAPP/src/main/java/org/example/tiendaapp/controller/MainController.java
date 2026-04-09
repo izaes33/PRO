@@ -9,9 +9,18 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * CONTROLADOR PRINCIPAL (Laboratorio):
+ * Este controlador demuestra el funcionamiento más básico de JavaFX:
+ * Leer una entrada de texto y actualizar una etiqueta al pulsar un botón.
+ */
 public class MainController implements Initializable {
 
-    // Equivalente a document.getElementById en JavaScript
+    /**
+     * INYECCIÓN FXML:
+     * Equivalente al 'document.getElementById' de JavaScript o 'findViewById' de Android.
+     * Conecta el ID definido en SceneBuilder con estas variables.
+     */
     @FXML private Button botonSaludar;
     @FXML private TextField editNombre;
     @FXML private Text textoSaludo;
@@ -30,6 +39,29 @@ public class MainController implements Initializable {
             } else {
                 // Modificamos el nodo texto inferior
                 textoSaludo.setText("Enhorabuena "+texto+" has completado la app JAVA FX");
+            }
+        });
+    }
+    private void actions() {
+        /**
+         * EVENTO SIMPLE (Lambda):
+         * 'event -> { ... }' es un atajo para definir qué pasa al hacer clic.
+         */
+        botonSaludar.setOnAction(event -> {
+
+            // 1. Obtenemos el texto que el usuario escribió en el cuadro
+            String texto = editNombre.getText();
+
+            // 2. Validación básica de datos
+            if (texto.isEmpty()){
+                // Modificamos el nodo de texto para dar feedback
+                textoSaludo.setText("No hay nadie a quien saludar");
+            } else {
+                /**
+                 * MANIPULACIÓN DINÁMICA:
+                 * Cambiamos el contenido del elemento visual 'textoSaludo' en tiempo real.
+                 */
+                textoSaludo.setText("Enhorabuena " + texto + " has completado la app JAVA FX");
             }
         });
     }

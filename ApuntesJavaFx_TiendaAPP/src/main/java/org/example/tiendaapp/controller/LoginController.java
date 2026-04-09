@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.tiendaapp.HelloApplication;
-import org.example.tiendaapp.data.DataSet;
+import data.DataSet;
 import org.example.tiendaapp.model.User;
 
 import java.io.IOException;
@@ -46,17 +46,16 @@ public class LoginController implements Initializable {
             String pass = editPass.getText();
 
             /**
-             * LÓGICA DE NEGOCIO (DataSet):
-             * No comprobamos el login aquí directamente. Delegamos esa responsabilidad
-             * a la clase DataSet, que actúa como nuestra base de datos simulada.
-             * * Si las credenciales coinciden, nos devuelve un objeto User.
-             * Si no, devuelve null.
+             * CONSULTA AL DATASET:
+             * DataSet funciona como nuestra "base de datos" temporal.
+             * Buscamos si existe un usuario con ese correo y contraseña.
              */
             User user = DataSet.getLogin(mail, pass);
 
             if (user != null) {
-                /** * FLUJO DE CAMBIO DE VENTANA:
-                 * Si el login es correcto, debemos cerrar esta ventana y abrir la nueva.
+                /**
+                 * FLUJO DE CAMBIO DE VENTANA:
+                 * Si el usuario es válido, abrimos una nueva ventana (Stage).
                  */
 
                 // A. Creamos el contenedor de la nueva ventana (Stage)
