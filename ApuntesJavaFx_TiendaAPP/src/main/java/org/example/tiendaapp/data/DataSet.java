@@ -1,4 +1,4 @@
-package data;
+package org.example.tiendaapp.data;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +19,14 @@ public class DataSet {
      * Usamos ObservableList en lugar de un ArrayList común para que las
      * vistas de JavaFX (como el ListView del administrador) se enteren
      * automáticamente si añadimos o borramos a alguien.
+     * La palabra clave static en Java define miembros (variables, métodos o clases anidadas) que pertenecen
+     * a la clase en sí y no a instancias (objetos) específicas. Esto significa que el miembro estático se
+     * comparte entre todos los objetos de esa clase, ahorrando memoria y permitiendo acceder a ellos sin crear
+     * un objeto nuevo.
+     * (Variables estáticas (variables de clase): Se utiliza para compartir un único valor entre todas las
+     * instancias de una clase (ej. un contador de objetos).
+     * Métodos estáticos: Permite invocar funciones sin necesidad de instanciar la clase (ej. Math.sqrt()).
+     * Los métodos estáticos solo pueden acceder directamente a otros miembros estáticos).
      */
     static private ObservableList<User> listUsers =
             FXCollections.observableArrayList(

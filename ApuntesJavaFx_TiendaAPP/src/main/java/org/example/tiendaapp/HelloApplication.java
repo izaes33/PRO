@@ -13,7 +13,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // El FXMLLoader es el "traductor" que lee el archivo XML y crea los objetos Java
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("form-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
 
         // Se crea la Escena (el contenido de la ventana) y se le pasa la interfaz cargada
         Scene scene = new Scene(fxmlLoader.load());

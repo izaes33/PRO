@@ -15,6 +15,8 @@
     </properties>
 
     <dependencies>
+<!-- OJO! En este tipo de proyectos, después de añadir las dependencias, hay que requerirlas en
+el fichero module-info.java !!! -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

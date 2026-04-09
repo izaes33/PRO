@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * CLASE PRODUCTO (El Molde Principal):
+ * La obtenemos pasando el GSON copiado de la API y pegado en Quiqktype.io!!!!!
  * Esta clase representa la estructura de un producto tal cual viene de la API.
  * * @lombok.Data:
  * Esta anotación es fundamental. Le dice a la librería Lombok que genere por nosotros

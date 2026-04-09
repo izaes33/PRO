@@ -35,9 +35,60 @@ RESUMEN DEL FLUJO DE INFORMACIÓN
 - Transporte:   -> La nube responde con un JSON que cae dentro de un ProductResponse.
 - Extracción:   -> Sacamos la lista de Product que hay dentro de ese sobre.
 - Uso:  -> Esos productos se envían a la tabla de la interfaz.
-- Consulta:     -> Si el usuario intenta comprar, el sistema consulta al DataSet para verificar quién está logueado y qué permisos tiene.
+- Consulta:     -> Si el usuario intenta comprar, el sistema consulta al DataSet para verificar quién está logueado y
+qué permisos tiene.
 
 ** Concepto clave: Esta estructura sigue el principio de Separación de Concernimientos
 (Separation of Concerns). Los datos no saben cómo se ven (Modelo), la vista no sabe de dónde vienen los datos (FXML)
 y el controlador es el mediador que los conecta.
 (MVC (Modelo-Vista-Controlador) es un patrón arquitectónico específico que aplica ese principio).
+
+---------------------------------------------------------------------------------------------------------------------
+
+La relación entre Product y ProductResponse es una estructura de composición jerárquica necesaria para procesar datos
+de una API moderna. Ambas son fundamentales para que la aplicación funcione correctamente.
+
+1. Relación: Contenedor y Contenido
+Imagina que pides una caja de herramientas por internet.
+Product: Es cada herramienta individual (el martillo, el destornillador). Contiene los detalles específicos de un
+solo artículo (nombre, precio, stock).
+ProductResponse: Es la caja de envío completa. La API de DummyJSON no te envía las herramientas sueltas; te envía
+un paquete que contiene la lista de herramientas y un "albarán" con metadatos (total de productos, cuántos se han saltado, etc.).
+
+Estructura Visual del JSON:
+JSON
+{
+  "products": [ {...}, {...} ],  <-- Esto es la lista de objetos Product
+  "total": 100,                  <-- Metadato en ProductResponse
+  "skip": 0,                     <-- Metadato en ProductResponse
+  "limit": 30                    <-- Metadato en ProductResponse
+}
+
+2. Ambas son imprescindibles:
+ - ProductResponse (Utilidad Técnica):  -> Sirve para la deserialización. Librerías como GSON necesitan un "molde"
+ que coincida exactamente con la respuesta de la web. Si intentaras mapear la respuesta de la API directamente a una
+ lista de Product, el programa fallaría porque no sabría qué hacer con los campos total, skip y limit.
+ - Product (Utilidad de Negocio):   -> Es el objeto que realmente le importa al usuario. Es el que define qué columnas
+ tendrá tu tabla y qué información se muestra en la interfaz.
+
+3. Uso en TiendaController
+ - A. El Mapeo (Uso de ProductResponse) ->
+En el método loadJSONProducts(), usas ProductResponse para recibir el impacto inicial de los datos:
+GSON usa ProductResponse como molde para organizar TODO el texto de la API
+ProductResponse responseProduct = gson.fromJson(body, ProductResponse.class);
+ - B. El Filtrado (Uso de Product) ->
+Una vez que tienes la "caja" (ProductResponse), extraes solo lo que te interesa (la lista de productos)
+para llenar la tabla:
+Extraemos la lista de objetos Product y la metemos en la lista de la UI
+listProducts.setAll(responseProduct.getProducts());
+ - C. La Visualización (Uso de Product) ->
+En el método initGUI(), le dices a la tabla que use los atributos internos de la clase Product para llenar las columnas:
+"title" y "price" son variables que existen dentro de la clase Product
+columnaNombre.setCellValueFactory(new PropertyValueFactory<>("title"));
+columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+Resumen de flujo
+API envía un texto largo (JSON).
+ProductResponse recibe ese texto y lo convierte en un objeto Java organizado.
+TiendaController abre ese objeto y saca la lista de Product.
+TableView recorre cada Product y muestra su nombre y precio en la pantalla.

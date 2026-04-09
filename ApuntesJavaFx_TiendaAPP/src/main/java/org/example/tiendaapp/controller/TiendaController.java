@@ -59,8 +59,8 @@ public class TiendaController implements Initializable {
     /**
      * LISTA OBSERVABLE DE PRODUCTOS:
      * Aquí almacenaremos los productos que traigamos de Internet.
-     * Al ser Observable, cualquier cambio aquí se reflejará en la tabla automáticamente,
-     * y ésta se enterará automáticamente cuando los productos terminen de descargarse de Internet.
+     * Al ser Observable, ésta se enterará automáticamente cuando los productos terminen de descargarse de Internet
+     * y cualquier cambio aquí se reflejará en la tabla automáticamente.
      */
     private ObservableList<Product> listProducts;
 

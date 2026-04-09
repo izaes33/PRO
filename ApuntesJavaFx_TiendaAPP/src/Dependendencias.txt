@@ -1,0 +1,8 @@
+En este tipo de proyectos, después de añadir las dependencias, hay que requerirlas en
+el fichero module-info.java !!!
+DESPUÉS DE REQUERIR LAS DEPENDENCIAS, HAY QUE OTORGAR ACCESO PÚBLICO Y DE COMPILACIÓN
+A OTROS MÓDULOS (con exports). -Sin esto, aunque las clases sean public, otros módulos no
+podrán verlas-.
+Y PERMITIR ACCESO POR REFLEXIÓN PROFUNDA (DEEP REFLECTION) ÚNICAMENTE AL MÓDILO JAVAFX.FXML
+(con opens) -Para que JavaFX pueda "mirar dentro" de las clases controladoras para conectar los
+elementos de la interfaz (los @FXML private "tal") con el código-.

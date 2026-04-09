@@ -38,7 +38,7 @@ Interacción Simple: Muestra la relación más básica de JavaFX: un evento de u
 Propósito: Sirve para validar que la configuración de la escena y los nodos FXML es correcta antes de implementar
 lógicas complejas como las de la Tienda o el Login.
 
-🔄 Resumen del Flujo de Usuario
+Resumen del Flujo de Usuario
 Inicio: El usuario llega al LoginController.
 Validación: Se comprueban los datos en DataSet.
 Bifurcación:

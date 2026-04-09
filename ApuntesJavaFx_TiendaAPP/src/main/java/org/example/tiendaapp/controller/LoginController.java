@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.tiendaapp.HelloApplication;
-import data.DataSet;
+import org.example.tiendaapp.data.DataSet;
 import org.example.tiendaapp.model.User;
 
 import java.io.IOException;
@@ -83,7 +83,7 @@ public class LoginController implements Initializable {
                             break;
                         default:
                             // Caso por defecto por seguridad
-                            fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("form-view.fxml"));
+                            fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
                     }
 
                     // C. Cargamos físicamente la vista

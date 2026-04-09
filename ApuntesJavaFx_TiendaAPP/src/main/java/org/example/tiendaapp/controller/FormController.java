@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.example.tiendaapp.HelloApplication;
-import data.DataSet;
+import org.example.tiendaapp.data.DataSet;
 import org.example.tiendaapp.model.User;
 
 import java.io.IOException;
@@ -226,6 +226,12 @@ public class FormController implements Initializable  {
     }
 
     //actions(): Asigna los comportamientos (listeners) a las interacciones del usuario.
+    /*Diferenciamos acciones:
+    * -Directas-> Las que son diferentes a todas las demás (setOnAction).
+    * -Indirectas-> Las que son compartidas por varios elementos (creando una clase anidada
+    * con el/los tratamiento/s de un evento).
+    * -Propiedades-> Cuando lo que se escucha es el cambio en las propiedades del estado
+    * de un elemento.*/
     private void actions() {
 
         btnAgregar.setOnAction(event -> {
@@ -378,24 +384,28 @@ public class FormController implements Initializable  {
 
         // 🔴 NUEVO:
         /**
-         * CAMBIO DE VENTANA:
-         *
-         * Cargamos un nuevo FXML (login-view)
+         * CAMBIO DE VENTANA: Cargamos un nuevo FXML (login-view)
          * y cerramos la ventana actual.
          */
         btnCerrar.setOnAction(event -> {
 
+            //1 - Creo stage
             Stage stage = new Stage();
 
             try {
+                //2 - Cargo parte gráfica
                 FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
+                //3 - Creo escena
                 Scene scene = new Scene(loader.load());
 
+                //4 - Asocio stage a scene
                 stage.setScene(scene);
                 stage.setTitle("Tienda ThePower");
                 stage.show();
 
+                //5 - Cierro stage actual
                 ((Stage)btnCerrar.getScene().getWindow()).close();
+                // (voy desde uno de los elementos gráficos de la escena, a la escena, a la ventana, y al metodo close).
 
             } catch (IOException e){
                 System.out.println("No se encuentra la ruta");
