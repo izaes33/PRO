@@ -18,6 +18,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // todos los codigos que  yo ponga aqui, se ejecuta nada mas cargar la parte fxml
+
         // Configuración de evento simple. Al pulsar el botón...
         botonSaludar.setOnAction(event -> {
             // Obtenemos el texto tecleado por el usuario

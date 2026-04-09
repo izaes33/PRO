@@ -38,3 +38,13 @@ seleccionar uno se deseleccione el otro, deben pertenecer al mismo "grupo". Para
 - getSelectionModel().getSelectedItem(): -> Elementos como los ChoiceBox o ComboBox tienen listas de opciones.
 Para saber qué ha elegido el usuario, no puedes pedir el texto directamente; primero pides el
 "modelo de selección" y luego el "ítem seleccionado".
+-PropertyValueFactory:                  -> Crucial en las tablas (TableView). Le dice a cada
+columna qué atributo del modelo (por ejemplo, "title" o "price") debe buscar dentro de los objetos para
+rellenar sus celdas automáticamente.
+
+-- Comunicación y Navegación  ->>
+-FXMLLoader:                            -> Es la herramienta que permite saltar entre ventanas
+(como pasar del Login a la Tienda). Al cargar un nuevo FXML, puedes crear un nuevo Stage (ventana) y cerrar el anterior.
+
+-Programación Reactiva:                 -> Mediante addListener, podemos hacer que la interfaz cambie en tiempo real.
+Por ejemplo, mostrar u ocultar una lista lateral cuando el usuario marca un CheckBox.

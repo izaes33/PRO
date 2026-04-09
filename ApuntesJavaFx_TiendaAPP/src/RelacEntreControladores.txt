@@ -1,0 +1,50 @@
+Esta aplicación sigue un modelo de navegación basada en roles y utiliza un almacén de datos centralizado para
+que la información fluya entre las ventanas.
+
+1. El Corazón de los Datos: DataSet (El Nexo)
+Aunque no es un controlador, es la pieza más importante para entender la relación.
+Función: Actúa como una "base de datos en memoria" compartida por todos los controladores.
+Persistencia: Cuando el FormController añade un usuario, lo guarda en DataSet. Más tarde, el LoginController puede
+consultar ese mismo DataSet para permitir el acceso.
+
+2. El Guardián: LoginController (El Orquestador)
+Es el punto de entrada principal del flujo lógico de la aplicación. Su responsabilidad es decidir qué camino toma
+el usuario.
+Relación con DataSet: Llama a DataSet.getLogin(mail, pass) para validar las credenciales.
+Relación con otros controladores:
+Si el perfil detectado es "admin", carga el archivo form-view.fxml vinculado al FormController.
+Si el perfil es "usuario", carga tienda-view.fxml vinculado al TiendaController.
+Cierre de ciclo: Una vez que abre la nueva ventana, se encarga de cerrar la ventana de login actual para limpiar
+la memoria.
+
+3. El Administrador: FormController (Gestión de Datos)
+Es la herramienta del administrador para alimentar el sistema.
+Acción sobre el Sistema: Permite crear nuevos objetos User y guardarlos en el DataSet central.
+Actualización en tiempo real: Al usar una ObservableList vinculada al ListView, cualquier cambio que realice el
+administrador se ve reflejado visualmente al instante.
+Vínculo de retorno: Incluye lógica para cerrar la sesión y volver a la pantalla de login (instanciando de nuevo
+el LoginController).
+
+4. El Consumidor: TiendaController (Consumo de Datos Externos)
+A diferencia de los anteriores, este controlador no mira tanto hacia adentro (DataSet), sino hacia afuera.
+Independencia: Se encarga de conectar con una API externa mediante HttpClient para traer productos en formato JSON.
+Visualización: Transforma esos datos externos en una lista que muestra en un TableView.
+Rol: Es la vista de destino para los usuarios que no tienen permisos de administración.
+
+5. El Laboratorio: MainController (Principios Básicos)
+Este controlador suele funcionar como una unidad de prueba o introducción a la tecnología JavaFX.
+Interacción Simple: Muestra la relación más básica de JavaFX: un evento de usuario (clic en botón) que lee una entrada
+(TextField) y modifica una salida (Text).
+Propósito: Sirve para validar que la configuración de la escena y los nodos FXML es correcta antes de implementar
+lógicas complejas como las de la Tienda o el Login.
+
+🔄 Resumen del Flujo de Usuario
+Inicio: El usuario llega al LoginController.
+Validación: Se comprueban los datos en DataSet.
+Bifurcación:
+Ruta A (Admin): Se abre FormController para gestionar usuarios.
+Ruta B (User): Se abre TiendaController para ver productos de la API.
+Base: Todos los componentes utilizan los principios de eventos y nodos que se demuestran en el MainController.
+
+Nota para el desarrollador: Recuerda que para que esta relación funcione, los archivos .fxml deben tener correctamente
+definida la propiedad fx:controller apuntando a la ruta completa de cada una de estas clases.

@@ -1,32 +1,43 @@
-1-El Arranque (Launcher): ->> Java entra por el método main de la clase Launcher.
-Este método llama a Application.launch().
+1. El Disparo Inicial (The Launcher)
+Todo comienza en la clase Launcher (o la clase que contiene el main). Java entra por este método, que es el
+punto de inicio universal. Su única misión es ejecutar Application.launch(), lo que despierta al motor gráfico de JavaFX.
 
-2-Preparando el Escenario: ->>
-(HelloApplication): El motor llama al método start(). Aquí entra en juego el FXMLLoader.
-Este objeto lee el archivo form-view.fxml.
+2. Preparando el Escenario (HelloApplication)
+El motor llama al método start(Stage stage). Aquí entra en juego el FXMLLoader. Este objeto es el "traductor":
+lee tu archivo .fxml (como login-view.fxml o form-view.fxml) y entiende cómo quieres que se vea la ventana.
 
-3-Construcción de la Vista (Bambalinas): ->> Al leer el XML,
-JavaFX empieza a crear los objetos visuales en la memoria: crea los campos de texto ,
-los botones, etc.
+3. Construcción de la Vista (Memoria)
+Al leer el XML, JavaFX empieza a crear los objetos visuales en la memoria RAM. Crea instancias reales de Button,
+TextField y TableColumn. En este punto, los objetos existen pero están "vacíos" y desconectados.
 
-4-Inyección del Controlador: ->> El FXML  dice que su controlador es FormController.
-JavaFX crea una instancia de esa clase y empieza a "enchufar" los objetos gráficos que acaba de
-crear en las variables marcadas con @FXML.
+4. El Cerebro de la Operación (Inyección del Controlador)
+El archivo FXML tiene una etiqueta llamada fx:controller. JavaFX ve que, por ejemplo, el controlador es FormController.
+Entonces:
+Crea una instancia de FormController.
+Busca todas las variables marcadas con @FXML y les "enchufa" los objetos gráficos que creó en el paso anterior.
+Si esto falla (por un nombre mal escrito), es cuando recibes el famoso error NullPointerException.
 
-5-La Inicialización (initialize): ->> Una vez que todo está enchufado, JavaFX llama a initialize().
-- Primero va a instances(), creando la configuración del spinner, la lista de perfiles y la sombra.
-- Luego va a initGUI(), inyectando esa configuración en el spinner,
-agrupando los radio buttons y metiendo los perfiles en el ChoiceBox.
-- Finalmente, va a actions(), dejando a los botones en "modo espera", con las orejas abiertas
-(los Listeners y EventHandlers asginados) esperando a que el usuario haga algo.
+5. El Despertar (initialize)
+Una vez que todos los cables (@FXML) están conectados, JavaFX llama automáticamente al método initialize().
+Siguiendo tu estructura organizada:
+instances(): Se crean los objetos lógicos (la ObservableList para los perfiles, el modelo del Spinner o la sombra
+DropShadow).
+initGUI(): Se aplica la configuración visual. Se enlazan las listas a los combos, se configuran las columnas de las
+tablas y se define qué se ve y qué no (como el borderGeneral.setRight).
+actions(): Se activan los Listeners. Los botones se quedan en "modo escucha", esperando un clic (setOnAction) o que
+el ratón pase por encima.
 
-6-Mostrar en Pantalla: ->> El código vuelve a HelloApplication, se mete la
-escena en el escenario (Stage) y se hace visible con stage.show().
+6. Luces, Cámara, Acción (stage.show())
+El código vuelve a la clase principal, se coloca la "Escena" (Scene) dentro del "Escenario" (Stage), se le pone un
+título y se ejecuta stage.show(). En este momento, el usuario ve la ventana por primera vez.
 
-7-Interacción (El Bucle de Eventos): ->>
-El programa se queda aquí, escuchando. Si el usuario mueve el ratón sobre el botón "Agregar",
-se dispara el evento MOUSE_ENTERED. El sistema va a tu clase ManejoRaton, entra al método
-handle, comprueba con getSource() que fue el botón "Agregar", y le aplica la sombra.
+7. Interacción y el Bucle de Eventos
+El programa entra en un bucle infinito de espera.
+Ejemplo de Login: Si el usuario pulsa "Entrar", el LoginController captura el evento, consulta al DataSet y decide si
+cerrar la ventana actual y abrir TiendaController.
+Ejemplo de Efectos: Si el usuario mueve el ratón, la clase interna ManejoRaton detecta el movimiento, identifica quién
+fue el emisor con event.getSource() y le aplica el efecto de sombra.
 
-8-El Final: ->> El programa sigue esperando y reaccionando a eventos hasta que el usuario
-pulsa la 'X' roja de la ventana. En ese momento, el motor de JavaFX se apaga y el programa termina.
+8. Bajada de Telón (Cierre)
+El programa sigue vivo mientras haya ventanas abiertas o el hilo de JavaFX esté activo. Cuando el usuario pulsa la 'X'
+o se llama a stage.close(), el motor limpia la memoria, cierra las conexiones y el proceso de Java termina finalmente.
