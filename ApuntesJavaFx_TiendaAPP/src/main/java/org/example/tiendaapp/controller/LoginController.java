@@ -52,6 +52,10 @@ public class LoginController implements Initializable {
              */
             User user = DataSet.getLogin(mail, pass);
 
+            // [ACTUALIZACIÓN]: Se añadió un log de consola en clase para verificar rápidamente
+            // si el usuario se está recuperando correctamente de la "base de datos" antes de cambiar de ventana.
+            // System.out.println(user.getNombre());
+
             if (user != null) {
                 /**
                  * FLUJO DE CAMBIO DE VENTANA:
@@ -83,11 +87,19 @@ public class LoginController implements Initializable {
                             break;
                         default:
                             // Caso por defecto por seguridad
-                            fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login-view.fxml"));
+                            // [ACTUALIZACIÓN]: En la versión de clase se modificó el "default" para que
+                            // cargue "form-view.fxml" en lugar de "login-view.fxml" si ocurriese un caso no previsto.
+                            fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("form-view.fxml"));
                     }
 
                     // C. Cargamos físicamente la vista
                     Parent parent = fxmlLoader.load();
+
+                    // [ACTUALIZACIÓN]: Se dejaron estos comentarios en el código de clase como pista para el futuro.
+                    // Sirven para recordar cómo conectar dos controladores. Al hacer "getController()",
+                    // podremos llamar a métodos de la nueva ventana para "pasarle datos" (ej. decirle quién ha iniciado sesión).
+                    // fxmlLoader.getController();
+                    // a esta le pasas el dato
 
                     // D. Creamos la escena, la ponemos en el escenario y la mostramos
                     Scene scene = new Scene(parent);

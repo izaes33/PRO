@@ -101,16 +101,6 @@ public class FormController implements Initializable  {
     private ObservableList<User> listaUsers;
 
     /**
-     * FÁBRICA DE VALORES PARA SPINNER:
-     * Es el "cerebro matemático" de tu componente Spinner (el selector de edad).
-     * El Spinner por sí solo es tonto (solo dibuja un cuadro con dos flechas).
-     * El SpinnerValueFactory le da las reglas del juego: le dice que maneja
-     * números enteros (Integer), que el rango es del 18 al 90, que empiece en 25,
-     * y que salte de 1 en 1.
-     */
-    private SpinnerValueFactory<Integer> modelEdad;
-
-    /**
      * EFECTO VISUAL:
      * Es un objeto que encapsula un efecto de sombra paralela.
      * En lugar de crear una sombra nueva cada vez que pasamos el ratón por un botón
@@ -128,6 +118,18 @@ public class FormController implements Initializable  {
      * el grupo desmarca el otro automáticamente.
      */
     private ToggleGroup grupoGenero;
+
+    /**
+     * FÁBRICA DE VALORES PARA SPINNER:
+     * Es el "cerebro matemático" de tu componente Spinner (el selector de edad).
+     * El Spinner por sí solo es tonto (solo dibuja un cuadro con dos flechas).
+     * El SpinnerValueFactory le da las reglas del juego: le dice que maneja
+     * números enteros (Integer), que el rango es del 18 al 90, que empiece en 25,
+     * y que salte de 1 en 1.
+     * se define de forma genérica para coincidir con el FXML.
+     */
+    private SpinnerValueFactory modelEdad;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -164,6 +166,12 @@ public class FormController implements Initializable  {
     //initGUI(): Aplica los modelos y configuraciones a los elementos visuales.
     private void initGUI() {
 
+        /**
+         * CONEXIÓN LISTVIEW - DATASET:
+         * Enlazamos el ListView con la lista global del DataSet para que los datos sean persistentes.
+         */
+        listViewUsuarios.setItems(DataSet.getListUsers());
+
         //EXPLICACIÓN DE MÉTODOS DE CONEXIÓN VISTA-LÓGICA
         /** * 1. spinnerEdad.setValueFactory(...)
         * El Spinner es solo un contenedor. La "Factoría de Valores" (ValueFactory) es
@@ -195,38 +203,28 @@ public class FormController implements Initializable  {
         // 🔴 NUEVO:
         /**
          * CONEXIÓN LISTVIEW - DATASET:
-         *
          * Aquí enlazamos el ListView con la lista de usuarios del DataSet.
-         *
          * DataSet actúa como "almacén central de datos".
-         *
          * Gracias a ObservableList:
          * - Si añadimos o eliminamos usuarios en DataSet
          * - El ListView se actualiza automáticamente
-         *
          * Esto evita tener que refrescar manualmente la interfaz.
          */
         listViewUsuarios.setItems(DataSet.getListUsers());
 
-        // 🔴 NUEVO:
         /**
-         * VISIBILIDAD INICIAL DE LA LISTA:
-         *
-         * Según el estado del CheckBox:
-         * - true → mostramos el ListView en la derecha
-         * - false → lo ocultamos
-         *
-         * Esto controla la interfaz de forma dinámica desde el inicio.
+         * CONFIGURACIÓN DINÁMICA DE LA INTERFAZ:
+         * Dependiendo de si el CheckBox está marcado al iniciar, mostramos o no la lista a la derecha.
          */
         if (checkLista.isSelected()){
             borderGeneral.setRight(listViewUsuarios);
         } else {
             borderGeneral.setRight(null);
+            }
         }
-    }
 
-    //actions(): Asigna los comportamientos (listeners) a las interacciones del usuario.
-    /*Diferenciamos acciones:
+    /*actions(): Asigna los comportamientos (listeners) a las interacciones del usuario.
+    Diferenciamos acciones:
     * -Directas-> Las que son diferentes a todas las demás (setOnAction).
     * -Indirectas-> Las que son compartidas por varios elementos (creando una clase anidada
     * con el/los tratamiento/s de un evento).
@@ -240,15 +238,11 @@ public class FormController implements Initializable  {
             // 🔴 NUEVO:
             /**
              * VALIDACIÓN DE FORMULARIO:
-             *
              * Antes de crear el usuario comprobamos:
              * - Campos vacíos
              * - Selección de género
              * - Selección de perfil
-             *
-             * Si algo falla:
-             * - Se muestra un Alert WARNING
-             *
+             * Si algo falla: Se muestra un Alert WARNING
              * Esto evita datos incorrectos en la aplicación.
              */
             if (editNombre.getText().isEmpty()
@@ -264,7 +258,7 @@ public class FormController implements Initializable  {
                 dialogPane.show();
 
             } else {
-
+                // Extracción de datos de la interfaz
                 String nombre= editNombre.getText();
                 String apellido= editApellido.getText();
                 String correo= editMail.getText();
@@ -283,9 +277,7 @@ public class FormController implements Initializable  {
                 // 🔴 NUEVO:
                 /**
                  * GUARDADO EN DATASET:
-                 *
                  * Añadimos el usuario a la lista global.
-                 *
                  * Resultado:
                  * - El ListView se actualiza automáticamente
                  * - Todos los controladores ven el cambio
@@ -300,7 +292,6 @@ public class FormController implements Initializable  {
                 // 🔴 NUEVO:
                 /**
                  * LIMPIEZA DEL FORMULARIO:
-                 *
                  * Llamamos a un método reutilizable
                  * para resetear todos los campos.
                  */
@@ -313,7 +304,6 @@ public class FormController implements Initializable  {
             // 🔴 NUEVO:
             /**
              * REUTILIZACIÓN DE MÉTODO:
-             *
              * En lugar de repetir código,
              * usamos clearFields()
              */
@@ -325,9 +315,7 @@ public class FormController implements Initializable  {
             // 🔴 NUEVO
             /**
              * OBTENER ELEMENTO SELECCIONADO:
-             *
              * Recuperamos el usuario seleccionado en el ListView.
-             *
              * Si no hay ninguno → devuelve null
              */
             User user = listViewUsuarios.getSelectionModel().getSelectedItem();
@@ -346,20 +334,10 @@ public class FormController implements Initializable  {
 
         // 🔴 NUEVO:
         /**
-         * ELIMINACIÓN DE USUARIOS:
-         *
-         * Flujo:
-         * 1. Obtener usuario seleccionado
-         * 2. Validar
-         * 3. Eliminar
-         * 4. Mostrar mensaje
-         *
-         * IMPORTANTE:
-         * - Aquí se elimina de listaUsers
-         * - Pero el ListView usa DataSet
-         *
-         * → En una implementación correcta:
-         * DataSet.getListUsers().remove(user);
+         * FLUJO DE ELIMINACIÓN:
+         * 1. Capturamos el elemento seleccionado.
+         * 2. Si existe, lo borramos de la lista (listaUsers).
+         * 3. Limpiamos la selección visual con select(-1).
          */
         btnEliminar.setOnAction(event -> {
 
@@ -378,6 +356,7 @@ public class FormController implements Initializable  {
                 dialogPane.setContentText("Usuario eliminado con exito");
                 dialogPane.show();
 
+                // Deseleccionamos para evitar errores de referencia
                 listViewUsuarios.getSelectionModel().select(-1);
             }
         });
@@ -434,15 +413,10 @@ public class FormController implements Initializable  {
 
         // 🔴 NUEVO:
         /**
-         * LISTENER REACTIVO:
-         *
-         * Detecta cambios en el CheckBox en tiempo real.
-         *
-         * - true → muestra lista
-         * - false → oculta lista
-         *
-         * Esto es programación reactiva:
-         * la interfaz responde automáticamente a cambios.
+         * PROPIEDADES REACTIVAS (Listeners):
+         * Escuchamos el cambio en la propiedad 'selected' del CheckBox.
+         * Si cambia a true, insertamos el ListView en el lado derecho del BorderPane;
+         * si cambia a false, lo eliminamos (null).
          */
         checkLista.selectedProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -457,7 +431,6 @@ public class FormController implements Initializable  {
     // 🔴 NUEVO:
     /**
      * MÉTODO DE LIMPIEZA:
-     *
      * Centraliza la limpieza del formulario.
      * Evita duplicar código.
      */

@@ -1,0 +1,28 @@
+Los WARNING que aparecen en la consola al lanzar la aplicación son advertencias de seguridad y compatibilidad que
+lanza Java (específicamente a partir de las versiones más recientes como Java 21) al trabajar con librerías externas
+como JavaFX.
+
+1. ¿Qué significan estos avisos?
+- Acceso Nativo Restringido:    -> Java está volviéndose más estricto. El aviso de java.lang.System::load dice que
+JavaFX está intentando usar librerías de tu sistema operativo (C++, librerías gráficas, etc.) para poder dibujar
+las ventanas. Java lo permite, pero te avisa de que en el futuro se le tendrá que dar permiso explícito.
+- Métodos "Terminally Deprecated":  -> JavaFX utiliza internamente una herramienta llamada Unsafe para gestionar la
+memoria de forma muy rápida (fuera de la gestión normal de Java). Java te avisa de que esa herramienta es antigua y
+que acabará desapareciendo, pero es algo que deben arreglar los desarrolladores de JavaFX.
+
+2. ¿Cómo solucionarlo? (Quitar los avisos)
+Para que la consola esté limpia, se puede añadir un parámetro de configuración a la ejecución del proyecto.
+En IntelliJ IDEA:
+Ve a Run -> Edit Configurations...
+Busca tu aplicación y en el campo VM Options (si no lo ves, dale a Modify options -> Add VM options), pega lo siguiente:
+--enable-native-access=javafx.graphics
+
+3. ¿Debería preocuparme?
+Rotundamente no. Como estudiante o desarrollador no afecta al funcionamiento.
+Es responsabilidad de la librería: Es un mensaje para que los creadores de JavaFX actualicen su código antes de que
+salgan versiones de Java todavía más nuevas (como Java 25 o superior).
+
+Resumen:
+Estos WARNINGS son informativos. Java avisa de que JavaFX está accediendo a funciones "nativas" del ordenador para
+mejorar el rendimiento gráfico. No es un error de lógica de nuestra aplicación, sino una transición de seguridad
+de las versiones modernas de Java.

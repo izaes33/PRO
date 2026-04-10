@@ -3,6 +3,8 @@ package org.example.tiendaapp.data;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.tiendaapp.model.User;
+// [ACTUALIZACIÓN]: Importamos la clase Product para poder gestionar la lógica del carrito de compras
+import org.example.tiendaapp.model.Product;
 
 import java.util.Optional;
 
@@ -35,6 +37,15 @@ public class DataSet {
                     new User("Maria", "Martin", "maria@gmail.com", "maria", "1234", "femenino", "usuario", 50)
             );
 
+    // [ACTUALIZACIÓN]: NUEVA LISTA PARA EL CARRITO
+    /**
+     * CARRITO DE COMPRAS:
+     * Creamos una lista estática de productos. Al ser 'static', el carrito será único
+     * para toda la aplicación y se compartirá entre la tienda y cualquier otra vista.
+     */
+    static private ObservableList<Product> carrito =
+            FXCollections.observableArrayList();
+
     /**
      * getListUsers(): Permite a los controladores obtener la lista completa
      * para mostrarla en tablas o listas.
@@ -43,12 +54,31 @@ public class DataSet {
         return listUsers;
     }
 
+    // [ACTUALIZACIÓN]: ACCESO AL CARRITO
+    /**
+     * getCarrito(): Método getter para obtener la lista de productos comprados.
+     * Servirá para que otros controladores puedan mostrar el contenido del carrito.
+     */
+    public static ObservableList<Product> getCarrito() {
+        return carrito;
+    }
+
     /**
      * addUser(User user): El método que usa el FormController para registrar
      * a alguien nuevo. Aquí se podría añadir lógica para evitar correos duplicados.
      */
     public static void addUser(User user) {
         listUsers.add(user);
+    }
+
+    // [ACTUALIZACIÓN]: MÉTODO PARA AÑADIR AL CARRITO
+    /**
+     * addCarrito(Product product): Este método es llamado desde el TiendaController.
+     * Recibe el producto seleccionado y lo añade a nuestra lista "carrito".
+     */
+    public static void addCarrito(Product product) {
+        // lógica -> aquí podríamos añadir comprobaciones antes de insertar
+        carrito.add(product);
     }
 
     /**
