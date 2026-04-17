@@ -1,0 +1,68 @@
+1. Arranque y Construcción-> Al hacer new Tienda(), Java entra al constructor de la clase Tienda.
+
+2. Instanciación del DAO-> Dentro del constructor de Tienda, se ejecuta clienteDAO = new ClienteDAO();.
+El flujo viaja ahora al constructor de ClienteDAO.
+
+3. Llamada al Singleton-> El constructor de ClienteDAO necesita una conexión, así que llama a DBConnection.getConnection().
+
+4. Fabricando el "Cable"-> El flujo entra en DBConnection. Como es la primera vez que se llama, la variable estática
+connection es null. Entra en el if, ejecuta createConnection(), se comunica con MySQL a través del puerto 3407,
+valida credenciales y crea el objeto Connection. Este objeto se devuelve y se guarda en tu ClienteDAO.
+
+5. Ejecutando la Acción-> Ahora que todo está preparado, desde el Main se llama a miTienda.agregarUsuario(cliente).
+
+6. Delegación-> La clase Tienda dice: "Yo no sé hablar con la base de datos, eso es trabajo del DAO", así que intenta
+ejecutar clienteDAO.insertarUsuarioPS(cliente).
+
+7. Preparación de la Consulta SQL-> El flujo baja al ClienteDAO. Se construye un String con la consulta SQL usando las
+constantes de SchemDB (para evitar errores tipográficos). Se prepara el PreparedStatement y se rellenan las incógnitas (?) con los datos del objeto Cliente (getNombre(), etc.).
+
+8. Impacto en MySQL-> Se ejecuta preparedStatement.execute(). La base de datos recibe la orden y guarda el registro.
+
+9. Manejo de Errores (El rebote)-> Si el correo ya existía (y MySQL lo tiene como clave única), MySQL lanza un error.
+JDBC lo captura y lanza un SQLException. El flujo vuelve inmediatamente al catch en Tienda.java. Allí, la tienda le pide
+al usuario un nuevo correo por consola y, de forma recursiva, se vuelve a llamar a sí misma (agregarUsuario(cliente))
+para volver a intentar el paso 6.
+
+
+Actor / Clase       Acción                                      Destino
+Usuario             Introduce datos en el menú                  Main
+Main                Llama a agregarUsuario(cliente)             Tienda
+Tienda              Llama a insertarUsuarioPS(cliente)          ClienteDAO
+ClienteDAO          Llama a getConnection()                     DBConnection
+DBConnection        Crea (si es nula) y retorna Connection      ClienteDAO
+ClienteDAO          Envía SQL con preparedStatement             MySQL Server
+MySQL               Ejecuta y confirma operación                ClienteDAO
+ClienteDAO          Informa del éxito o lanza SQLException      Tienda
+
+
+INICIO: Main (Interfaz de usuario)
+  │
+  ▼
+[ TIENDA ] ─── (1. Recibe datos del Cliente e intenta ejecutar la lógica)
+  │
+  ▼
+[ ClienteDAO ] ─── (2. Traduce Objeto Java a SQL)
+  │      │
+  │      └───► [ DBConnection ] ── (3. ¿Hay conexión? Si no, la crea)
+  │                                 -Consulta a: SchemDB (Para traer nombres de tablas/columnas)
+  │                                 -Prepara: connection.prepareStatement("INSERT INTO...")
+  │                                 -Mapea: ps.setString(1, cliente.getNombre()), etc.
+  │                                 -Ejecuta: ps.execute()
+  │                                     │
+  │            [ MySQL Server ] ◄───────┘ (4. Ejecuta la Query)
+  │                   │               -Procesa: Escribe en el disco duro (.ibd)
+  │                   │               -Responde: "OK" (o lanza Error de Duplicado)
+  │                   │
+  │  [ ClienteDAO ] ◄─┘ (5. Devuelve filas o errores, retornando el control a Tienda (o propagando la SQLException))
+  │          │
+  ▼          │
+[ TIENDA ] ◄─┘ (6. Si hay error de correo duplicado, se reinicia)
+  │                  ¿Hubo SQLException?
+  │                      catch {
+  │                          SI: Pide nuevo correo y RECURSIVIDAD (vuelve al paso 4)
+  │                          NO: Termina el método con éxito
+  │                      }
+  │
+  ▼
+FIN: Main (Muestra resultado al usuario)

@@ -21,7 +21,7 @@ public class DBConnection {
 
     /**
      * MÉTODO DE ACCESO GLOBAL:
-     * Cuando cualquier otra clase (como el Main o un controlador) necesite
+     * Cuando cualquier otra clase (como el DAO) necesite
      * hablar con la base de datos, llamará a este método.
      * @return El objeto Connection activo.
      */
@@ -42,7 +42,7 @@ public class DBConnection {
      * solo la propia clase a través de getConnection() controla cuándo se fabrica.
      */
     private static void createConnection(){
-        // 1. Credenciales de acceso a tu MySQL (XAMPP por defecto suele ser root y contraseña vacía, aquí usas root/root)
+        // 1. Credenciales de acceso a tu MySQL (XAMPP por defecto suele ser root y contraseña vacía)
         String user = "root";
         String pass = "root";
         String database = "Tienda_thepw"; // Nombre exacto de la BD en phpMyAdmin
@@ -53,7 +53,7 @@ public class DBConnection {
              * Le damos la URL de conexión.
              * - jdbc:mysql:// -> Es el protocolo (como el http:// de las webs).
              * - 127.0.0.1: -> Es 'localhost' (tu propio ordenador).
-             * - 3306 (por defecto) -> puerto de MySQL.
+             * - 3407 -> puerto específico configurado para MySQL en este proyecto (suele ser 3306).
              * - /database -> A qué base de datos concreta queremos entrar.
              */
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3407/"+database, user, pass);

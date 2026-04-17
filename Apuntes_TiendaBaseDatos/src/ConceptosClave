@@ -1,0 +1,25 @@
+Este proyecto está construido utilizando varios patrones de diseño y tecnologías estándar de Java para
+interactuar con bases de datos de forma limpia y segura.
+
+-Patrón DAO (Data Access Object)-> Su propósito es separar la lógica de negocio (lo que hace la aplicación) de
+la lógica de acceso a datos (cómo se guarda o recupera la información en MySQL).
+Así, si un día cambiamos MySQL por otra base de datos, solo tocamos el DAO, no el resto del programa.
+
+-Patrón Singleton-> Utilizado en DBConnection. Garantiza que solo exista una única conexión a la base de datos
+durante toda la vida de la aplicación. Abrir y cerrar conexiones constantemente es un proceso "caro" (consume
+muchos recursos); el Singleton asegura que todos los datos usen el mismo "cable" hacia la base de datos.
+
+-Arquitectura por Capas (MVC)->
+    -Modelo (Cliente)-> Representa los datos puros.
+    -Controlador/Servicio (Tienda)-> Contiene la lógica de negocio.
+    -Acceso a Datos (ClienteDAO / DBConnection)-> Ejecuta las operaciones  contra la base de datos.
+
+-JDBC (Java Database Connectivity)-> Es la API nativa de Java que estás usando para hablar con MySQL
+                                     (Connection, Statement, PreparedStatement, ResultSet).
+
+-Inyección SQL y PreparedStatement-> En ClienteDAO se usa Statement (inseguro) y PreparedStatement (seguro).
+Este último pre-compila la consulta SQL y usa parámetros (?), lo que evita que un usuario malintencionado pueda
+inyectar código SQL destructivo en tus inputs.
+
+-Lombok-> Las etiquetas @Getter, @Setter y @NoArgsConstructor en Cliente son de la librería Lombok.
+Evitan tener que escribir a mano todos los getters y setters, manteniendo el código limpio.

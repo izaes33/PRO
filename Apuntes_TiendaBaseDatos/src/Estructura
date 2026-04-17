@@ -1,0 +1,51 @@
+---------------------ARQUITECTURA---------------------
+
+view -> main, donde tengo la interacción con el usuario
+
+model -> Clase Cliente.java: Representa la estructura del objeto y sus datos (id, nombre, saldo, etc.).
+Utiliza la librería Lombok para automatizar la creación de Getters, Setters y Constructores.
+
+controller -> lógica de negocio
+	Tienda.java -> logica de negocio
+        insertClient() -> la logica de la insercion. (Por ejemplo: cuando creo un cliente le mando un correo de confirmacion para el 2FA).
+        borrarClient() -> la logica del borrado. (Por ej.: cuando un cliente se borra lo que se hace es eliminar todos sus documentos).
+        Fidelización: Implementa lógica de negocio filtrando clientes según su saldo.
+
+database
+    configuraciones de la base de datos
+
+dao -> capa de acceso a datos (una clase dao por modelo), solo interactúa con la BBDD ejecutando CRUD
+(crear, eliminar, buscar, listar, actualizar)
+	Clientedao.java -> logica contra la base de datos -> INSERT DELETE UPDATE SELECT
+    Interfaz SchemDB.java: Almacena constantes con los nombres de tablas y columnas para evitar errores
+    de escritura en las consultas SQL.
+
+service ->
+    generalService -> interfaces donde están las firmas de los métodos CRUD (generico)
+    clienteService -> interfaces donde están las firmas de los métodos CRUD
+        public void insertClient(String)
+    clienteServiceImp -> implementacion de las firmas en la interfaz
+        insertClient() ->
+
+-------------------------------------------------------------------------------------------
+
+PROYECTO: TIENDA_THEPW
+│
+├── 1. CAPA DE MODELO (Los Datos)
+│   └── Cliente (Clase POJO)
+│       ├── Atributos: id, nombre, apellido, correo, saldo, idPerfil
+│       └── Anotaciones: @Getter, @Setter (Lombok)
+│
+├── 2. CAPA DE PERSISTENCIA (La Base de Datos)
+│   ├── DBConnection (Singleton)
+│   │   └── Método: getConnection() -> Crea/Retorna la conexión única
+│   ├── SchemDB (Interfaz)
+│   │   └── Constantes: Nombres de tablas y columnas (TAB_CLIENTES, COL_NAME...)
+│   └── ClienteDAO (Data Access Object)
+│       ├── Atributos: Connection, PreparedStatement, ResultSet
+│       └── Métodos: insertarUsuario(), obtenerClientes(), actualizarUsuario()
+│
+└── 3. CAPA DE CONTROL (La Lógica)
+    └── Tienda (Controlador)
+        ├── Atributo: clienteDAO (Para hablar con la BD)
+        └── Métodos: agregarUsuario(), lanzarFidelizacion()

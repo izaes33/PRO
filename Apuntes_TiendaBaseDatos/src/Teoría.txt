@@ -7,7 +7,7 @@ Base de datos
 
 
 Java se comunica con el servidor de la base de datos
-Java   --------------------------------->   Servidor de base de datos (XAMP -> MariaDB / SQL Server / Postrgres)
+Java   --------------------------------->   Servidor de base de datos
 	   ---------SRVWeb+ORM-------------->
 	   -----APIREST-Springboot)--------->
 
@@ -20,332 +20,120 @@ y para entender la 2ª hay que entender la 1ª)
 		ejecucion "plana" de querys
 
 		4 objetos implicados:
-		- Connection:           -> representa la conexion a la base de datos -> uri: jdbc:mysql://localhost/miDB
+		- Connection:           -> representa el enlace físico con la base de datos -> uri: jdbc:mysql://localhost/miDB
 		(jdbc es la primera primera parte de la URI (protocolo de enrutamiento), al igual que otros protocolos pueden ser:
 		ftp:// smb:// nfs:// ssh:// file: (en protocolos de internet)). Lo siguiente que compone la URI es el tipo de
 		DBS que vamos a utilizar (en nuestro caso mysql), la URL del servidor (127.0.0.1 o localhost; o
 		el DNS que tengamos si es una conexión externa) y el puerto (3306 por defecto).
 
-		- Statement:            -> permite ejecutar sentencias QUERY "plana" SELECT * FROM Usuarios WHERE nombre =
-		'"+variable+"' "select * from usuarios where nombre = '%s' and localizacion = '%s' and salario < %d"-
-		El trabajo lo hace el motor de base de datos -> Se puede producir un SQL Injection
+		- Statement:            -> permite ejecutar consultas SQL "planas". Es vulnerable a SQL Injection.
 
-		- PrepareStatement:     -> permite ejecutar sentencias QUERY parametrizadas - El trabajo lo hace el cliente
-		previene SQL Injection
-		HASTA AQUI PARA HACER INSERT UPDATE DELETE -> bool / int
+		- PrepareStatement:     -> Ejecuta consultas parametrizadas (usando ?). Previene la inyección de código malicioso
+		al gestionar los datos en el lado del cliente.
 
-		- ResultSet -> permite obterner los registros de una sentencia SELECT
+		- ResultSet -> Almacena los registros obtenidos tras una sentencia SELECT.
 
 
-	2 - ORM -> Hibernate (ORM Java) ->no se ejecutan querys -> pasa el objeto a query directamente
-	-> session.save(new Usuario())
-	(cada clase tiene un atributo que es la relación con otra tabla y es la lista de objetos con la
-	que se relaciona)
+	2 - ORM -> Hibernate (ORM Java) -> Nivel intermedio donde se mapean objetos directamente a tablas sin escribir SQL
+	manualmente
 
 
-	3 - modelo de 3 capas -> SpringBoot -> Independiza base de datos, cliente y servidor
-        configura las APIs mediante controller con lenguaje HQL
-
----------------------
-
-model
-	cliente.java -> estructura del objeto y sus acciones
-
-controller
-	tiendacontroller.java -> logica de negocio
-	insertClient() -> la logica de la insercion. (Por ejemplo: cuando creo un cliente le mando un correo de confirmacion para el 2FA).
-	borrarClient() -> la logica del borrado. (Por ej.: cuando un cliente se borra lo que se hace es eliminar todos sus documentos).
-
-dao -> capa de la base de datos (una clase dao por modelo)
-	clientedao.java -> logica contra la base de datos -> INSERT DELETE UPDATE SELECT
-	insertClient() -> ejecucion de la query
-	borrarClient() -> ejecuta la quiery
+	3 - modelo de 3 capas -> SpringBoot -> Nivel avanzado que independiza totalmente el cliente, el servidor y la base de datos.
 
 --------------------------------------------------------------------
 
-“XAMPP en Docker” es una fase intermedia, sirve para:
-Aprender Docker sin complicarte y mantener un entorno familiar.
-Pero en proyectos reales evolucionas a:
+“XAMPP en Docker” es una fase intermedia, sirve para Aprender Docker sin complicarte y mantener un entorno familiar.
+Pero en proyectos reales se evoluciona a:
+Nginx en vez de Apache - Bases de datos separadas - Microservicios
 
-Nginx en vez de Apache
-Bases de datos separadas
-Microservicios
-
-Cuando trabajamos con el entorno XAMM replicado en Docker, nos conectamos a
-xamp_db, que es la base de datos a la que se accede desde DBeaver.
+Cuando trabajamos con el entorno XAMPP replicado en Docker, nos conectamos a xamp_db, que es la base de datos a la que
+se accede desde DBeaver.
 
 XAMPP-> Interfaz web que se basa en APACHE; conecta a sistema gestor de base de datos: phpMyAdmin, FTP o servidor web
-DOCKER-> Levanta programas de máquina virtual en local (por ejemplo: XAMPP) de manera que XAMPP ya no depende
-de la máquina y permite no trabajar en local independizando servicios para hacer el desarrollo lo más real posible
-
-Con esto se puede levantar todo directamente desde Docker sin usar el panel de XAMPP.
-•  Arrancar: docker compose -f xampp-docker-desktop/docker-compose.yml up -d
-•  Parar: docker compose -f xampp-docker-desktop/docker-compose.yml down
-•  Servicios:
-◦  Web: http://localhost:8013
-◦  MySQL 8.0: localhost:3407
-◦  phpMyAdmin: http://localhost:8081
+DOCKER-> Levanta programas BBDD en local independizando servicios para hacer el desarrollo lo más real posible
 
 Diferencia entre levantar en XAMPP vs Docker:
-•  XAMPP: corre nativo en Windows (más simple/rápido para empezar).
-•  Docker: corre aislado en contenedores (más reproducible y portable entre máquinas).
+•  XAMPP: corre nativo en Windows (más simple/rápido para empezar). - Docker: corre aislado en contenedores
+(más reproducible y portable entre máquinas).
 •  Versionado: en Docker fijas versiones exactas (mysql:8.0, php:8.2-apache); en XAMPP dependes del paquete instalado.
-•  Datos: ahora son entornos distintos.
-◦  XAMPP usa su propia data local.
-◦  Docker usa el volumen mysql8_data.
-  Lo que cambies en una BD no se refleja en la otra, salvo migración.
+◦  XAMPP usa su propia data local. - Docker usa el volumen mysql8_data.
 •  Puertos: pueden convivir si usan puertos distintos (como ahora).
 
 DBEAVER-> SGBD que permite levantar una base de datos de cualquier tipo con un servidor propio
-utilizando un protocolo de conexión (en nuestro caso: jdbc)
+utilizando un protocolo de conexión (en nuestro caso: jdbc).
+Es una herramienta gráfica para trabajar con bases de datos que permite ver, editar y consultar bases de datos
+sin usar comandos.
+Sirve para conectarte a motores como: MySQL, PostgreSQL, SQLite, Oracle, etc.
+
+Levantas MySQL en Docker: docker run -p 3306:3306 mysql
+Abres DBeaver, te conectas con: Host: localhost - Puerto: 3306
+DBeaver se conecta al MySQL o al motor de BD que está dentro del contenedor
 
 --------------------------------------------------------------------
 
 🔹 1. XAMPP: entorno local clásico (todo en tu máquina)
-Con XAMPP instalas directamente en tu PC:
-Apache (servidor web), MySQL / MariaDB (base de datos), PHP
-👉 Todo corre en tu sistema operativo.
-
-Cómo te conectas a la base de datos
-Host: localhost
-Puerto: normalmente 3306
-Usuario/contraseña: los que configures
-
-Ejemplo típico:
-$conn = new mysqli("localhost", "root", "", "mi_bd");
-Problema real
-Funciona en tu máquina… pero no garantiza que funcione igual en producción.
-Si otro dev tiene otra versión de MySQL/PHP → problemas.
-Si subes a servidor Linux y tú usas Windows → más problemas.
+Con XAMPP instalas directamente en tu PC: Apache (servidor web), MySQL / MariaDB (base de datos), PHP
+Funciona en tu máquina… pero no garantiza que funcione igual en producción; si otro dev tiene otra versión de
+MySQL/PHP → problemas. Si subes a servidor Linux y tú usas Windows → más problemas.
 
 🔹 2. Docker: entorno aislado en contenedores
 Con Docker no instalas servicios directamente, sino que levantas contenedores (mini entornos independientes).
+localhost desde tu PC ≠ localhost dentro de Docker - Cada contenedor es “su propio mundo”
 
 Ejemplo:
 Un contenedor → MySQL
 Otro contenedor → PHP
 Otro → Nginx
-👉 Cada uno corre aislado pero conectado por red interna.
 
-Cómo te conectas a la base de datos: Aquí cambia lo importante:
-❌ No usas localhost
-✅ Usas el nombre del contenedor
+Docker es “más real” porque imita cómo funcionan los sistemas en producción hoy en día:
+En producción moderna hay contenedores o microservicios (Servicios separados DB, backend, frontend)
 
-Ejemplo:
-$conn = new mysqli("mysql_container", "root", "password", "mi_bd");
-O en docker-compose:
-services:
-  db:
-    image: mysql:8
-  app:
-    depends_on:
-      - db
-Entonces el host sería: db
-
-🔥 3. Diferencia clave
-XAMPP: Todo mezclado en tu sistema, difícil replicar en otro entorno
-Docker: Entornos aislados, configuración reproducible (con docker-compose)
-(Igual en tu PC, staging y producción).
-
-🚀 4. ¿Por qué Docker es “más real”?
-Porque imita cómo funcionan los sistemas en producción hoy en día:
-En producción moderna: No hay “un servidor con todo instalado”,
-hay contenedores o microservicios (Servicios separados DB, backend, frontend)
-👉 Docker replica eso exactamente.
-
-⚠️ Ejemplo claro
-Con XAMPP: PHP + MySQL + Apache juntos
-Subes a un VPS → falla algo → sorpresa
-Con Docker: Defines todo en un docker-compose.yml -> Subes → ejecutas → funciona igual
+Docker sustituye el uso de máquinas virtuales para desarrollo, porque ofrece aislamiento de forma ligera y rápida.
+Antes usabas VM para: Tener Linux en Windows, islar entornos y evitar conflictos. Ahora Docker hace eso mismo:
+Aísla dependencias, replica entornos reales y funciona igual en todos lados sin cargar con otro sistema operativo entero
+En algunos casos (sobre todo en Windows/Mac), Docker sí usa una mini VM interna, pero tú no la gestionas
 
 --------------------------------------------------------------------
 
-XAMPP; ¿Qué es cada cosa realmente?
 En XAMPP se tienen varias piezas:
 Apache HTTP Server → sirve páginas web (HTTP)
 MySQL → gestiona bases de datos
 PHP → ejecuta lógica del servidor
 
-🔹 1. MySQL NO es una web
-Esto es clave: MySQL es un servidor de base de datos,
+**MySQL NO es una web, es un servidor-motor de base de datos,
 funciona por TCP/IP (puerto 3306), no por HTTP, no necesitas navegador para usarlo
 Puedes conectarte con: línea de comandos, apps como DBeaver, scripts en PHP, Python, etc.
-👉 Es como un “motor” al que le haces consultas, no una web.
 
-🔹 2. ¿para qué sirve Apache?
-Apache recibe una petición web http://localhost/index.php. Ejecuta PHP; PHP hace esto:
+Apache es un servidor web que recibe una petición web y ejecuta PHP.
+
 PHP se conecta a MySQL y devuelve el resultado al navegador.
-($conn = new mysqli("localhost", "root", "", "mi_bd");)
 
 🔄 Flujo real (importante)
 Navegador → Apache → PHP → MySQL
                          ↓
                   devuelve datos
-👉 Apache no accede a MySQL directamente
-👉 PHP es el que hace la conexión
 
-🔥 4. ¿Por qué puedes usar MySQL sin Apache?
-Porque MySQL corre como un servicio del sistema: En Windows → servicio; En Linux → daemon
-Ejemplo sin Apache:
-mysql -u root -p
-O con Python:
-import mysql.connector
+(Puedes apagar Apache y MySQL sigue funcionando, ypuedes usar Apache sin MySQL (páginas estáticas)).
 
-🔹 5. ¿Por qué parece que dependen? -> Porque XAMPP te lo empaqueta todo junto:
-Arrancas Apache ✔
-Arrancas MySQL ✔
-Y normalmente los usas juntos → web + base de datos
-Pero en realidad: Puedes apagar Apache y MySQL sigue funcionando,
-puedes usar Apache sin MySQL (páginas estáticas)
-
-🧠 Resumen:
-MySQL → es un servidor de datos
-Apache → es un servidor web
-PHP es el puente entre ambos en aplicaciones web
-
---------------------------------------------------------------------
-
-🔹 1. ¿Hay que “conectarse a la web” para usar XAMPP?
-👉 No necesariamente.
-Depende de qué estés usando dentro de XAMPP:
-
-✔ Caso A: solo usas MySQL
-No usas navegador, no usas Apache, te conectas directamente al servidor de MySQL
-Ejemplo: mysql -u root -p
-👉 Aquí no hay web en ningún momento
-
-✔ Caso B: usas una aplicación web (lo típico)
-Ahí sí:
-Abres navegador → http://localhost
-Eso va a Apache HTTP Server, Apache ejecuta PHP, PHP conecta con MySQL
-👉 Aquí sí se está usando “la web”, pero solo como interfaz
-
-🔹 2. Clave: Apache ≠ Internet
-Apache es un servidor web, pero:
+Apache ≠ Internet; Apache es un servidor web, pero:
 Puede servir páginas en local (localhost) sin necesidad de conectarse a internet
 (No estás “conectándote a una web externa”). Estás accediendo a tu propio servidor en tu PC
 
-🔹 3. Ejemplo claro
-Cuando entras a:
-http://localhost/phpmyadmin
-Estás usando una web, ero esa web está en tu ordenador, Apache la sirve,
-y esa web luego conecta con MySQL ✔
-
-🧠 Resumen
-No necesitas “conectarte a la web” para usar XAMPP; olo usas web si accedes mediante navegador
-Apache sirve webs, pero puede ser solo local, MySQL funciona completamente aparte
-
----------------------------------------------------------------------------------
-
-“Docker sustituye el uso de máquinas virtuales para desarrollo, porque
-ofrece aislamiento de forma mucho más ligera y rápida.”
-
-Antes usabas VM para: Tener Linux en Windows, islar entornos y evitar conflictos
-
-Ahora Docker hace eso mismo:
-Aísla dependencias, eplica entornos reales y funciona igual en todos lados
-sin cargar con otro sistema operativo entero
-
-En algunos casos (sobre todo en Windows/Mac):
-Docker sí usa una mini VM interna, pero tú no la gestionas
-
 --------------------------------------------------------------------
 
-🔹 ¿Qué es DBeaver?
-DBeaver es una herramienta gráfica para trabajar con bases de datos.
-Básicamente: es un programa que instalas en tu PC y te
-permite ver, editar y consultar bases de datos sin usar comandos.
-Es como un “panel de control” para bases de datos
+Aunque aparezca “xampp” en Docker, sigue siendo Docker puro:
 
-🔹 ¿Para qué sirve?
-Sirve para conectarte a motores como: MySQL, PostgreSQL, SQLite, Oracle, etc.
+xampp_db → base de datos; usa MySQL
+xampp_phpmyadmin → Interfaz web para la BD; usa phpMyAdmin
+xampp_web → Servidor web; probablemente Apache + PHP
 
-Y hacer cosas como: Ejecutar consultas SQL, ver tablas y datos,
-modificar registros, crear bases de datos y exportar/importar datos
-
-DBeaver NO es Docker, ni depende de Docker, pero puedes usarlo con contenedores de Docker.
-
-🔄 Cómo se conectan
-Levantas MySQL en Docker: docker run -p 3306:3306 mysql
-Abres DBeaver, te conectas con:
-Host: localhost
-Puerto: 3306
-👉 DBeaver se conecta al MySQL que está dentro del contenedor
-
-🔥 Idea clave
-Docker → dónde corre la base de datos (el servidor)
-DBeaver → cómo la gestionas visualmente
-👉 Uno ejecuta, el otro administra
-
---------------------------------------------------------------------
-
-🔥 1. Qué significa que aparezca “xampp” en Docker
-Ese nombre (xampp_web, xampp_db, etc.) puede venir de:
-El nombre del proyecto, un docker-compose.yml, o una imagen preparada tipo “xampp”
-👉 Pero sigue siendo Docker puro, no el XAMPP de siempre.
-
-🔹 2. Qué hay realmente dentro
-xampp_db → usa MySQL
-xampp_phpmyadmin → usa phpMyAdmin
-xampp_web → probablemente Apache + PHP
-(Lo mismo que trae XAMPP, pero montado manualmente en contenedores).
-
-🔥 3. Diferencia clave
-XAMPP real -> Instalado en tu sistema -> Todo junto (Apache + MySQL + PHP),
-puertos por defecto
-“XAMPP en Docker” -> Separado en contenedores, cada servicio independiente,
-puertos personalizados
+Diferencia clave
+XAMPP real -> Instalado en tu sistema -> Todo junto (Apache + MySQL + PHP), puertos por defecto
+“XAMPP en Docker” -> Separado en contenedores, cada servicio independiente, puertos personalizados
+En vez de: “instalo XAMPP”, se hace: “levanto Apache, MySQL y phpMyAdmin por separado”
 (Es una imitación modular de XAMPP, no el original).
 
-🔹 4. Por qué se hace esto -> Porque en Docker se trabaja así:
-1 contenedor = 1 servicio = Más control, más parecido a producción
+Por qué se hace esto -> Porque en Docker: 1 contenedor = 1 servicio = Más control, más parecido a producción
 
-👉 En vez de: “instalo XAMPP”, se hace: “levanto Apache, MySQL y phpMyAdmin por separado”
-
-🔹 5. Entonces, ¿por qué lo llaman XAMPP? -> Para indicar “esto es un entorno tipo XAMPP”
-y para que sea fácil de entender. Pero técnicamente:
-No es XAMPP; Es Docker replicando XAMPP
-
-🧠 Resumen: No estás usando el XAMPP de tu PC dentro de Docker,
-estás usando contenedores que hacen lo mismo
+Resumen: No se está usando XAMPP dentro de Docker, se están usando contenedores que hacen lo mismo
 (El nombre “xampp” es solo etiqueta, no el software real).
-
---------------------------------------------------------------------
-
-Al pasar XAMPP a Docker se crean 3 cntenedores:
-🔹 1. xampp_db → Base de datos
-Imagen: mysql:8.0
-Puerto: 3407:3306
-3306 → puerto interno del contenedor (MySQL)
-3407 → puerto en tu PC
-💡 Acceso: localhost:3407
-👉 Este es el servidor de base de datos real
-
-🔹 2. xampp_phpmyadmin → Interfaz web para la BD
-Imagen: phpmyadmin:5-apache
-Puerto: 8081:80
-80 → puerto interno (web)
-8081 → puerto en tu PC
-💡 Acceso: http://localhost:8081
-👉 Esto es solo una web para gestionar MySQL, no la base de datos en sí
-
-🔹 3. xampp_web → Servidor web (Apache + PHP)
-Imagen: algo tipo xampp-docker-desktop
-Puerto: 8013:80
-💡 Acceso: http://localhost:8013
-👉 Aquí es donde correría tu aplicación PHP
-
-🔥 Diferencias:
-Contenedor	        Qué hace	                Cómo accedes
-xampp_db	        Base de datos (MySQL)	    DBeaver / código
-xampp_phpmyadmin	Interfaz web para la BD	    Navegador
-xampp_web	        Servidor web (tu app)	    Navegador
-
-⚠️ Lo importante
-localhost desde tu PC ≠ localhost dentro de Docker
-Cada contenedor es “su propio mundo”
-
-🧠 Resumen:
-No son “conexiones distintas”, son servicios separados
-Cada uno tiene su puerto para acceder desde fuera
-Se comunican entre ellos internamente por nombre
