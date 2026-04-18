@@ -44,15 +44,17 @@ INICIO: Main (Interfaz de usuario)
   ▼
 [ ClienteDAO ] ─── (2. Traduce Objeto Java a SQL)
   │      │
-  │      └───► [ DBConnection ] ── (3. ¿Hay conexión? Si no, la crea)
-  │                                 -Consulta a: SchemDB (Para traer nombres de tablas/columnas)
-  │                                 -Prepara: connection.prepareStatement("INSERT INTO...")
-  │                                 -Mapea: ps.setString(1, cliente.getNombre()), etc.
-  │                                 -Ejecuta: ps.execute()
-  │                                     │
-  │            [ MySQL Server ] ◄───────┘ (4. Ejecuta la Query)
-  │                   │               -Procesa: Escribe en el disco duro (.ibd)
-  │                   │               -Responde: "OK" (o lanza Error de Duplicado)
+  │      └───► [ DBConnection ] ─── (3. ¿Hay conexión? Si no, la crea)
+  │                    │
+  │                    ▼
+  │             [ ClienteDAO ] ───  -Consulta a: SchemDB (Para traer nombres de tablas/columnas)
+  │                    │            -Prepara: connection.prepareStatement("INSERT INTO...")
+  │                    │            -Mapea: ps.setString(1, cliente.getNombre()), etc.
+  │                    │            -Ejecuta: ps.execute()
+  │                    ▼
+  │            [ MySQL Server ] ─── (4. Ejecuta la Query)
+  │                   │              -Procesa: Escribe en el disco duro (.ibd)
+  │                   │              -Responde: "OK" (o lanza Error de Duplicado)
   │                   │
   │  [ ClienteDAO ] ◄─┘ (5. Devuelve filas o errores, retornando el control a Tienda (o propagando la SQLException))
   │          │

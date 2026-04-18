@@ -19,19 +19,26 @@ y para entender la 2ª hay que entender la 1ª)
 	1 - forma directa: JDBC -> Driver, ejecuta sentencias SQL sobre una conexion a base de datos
 		ejecucion "plana" de querys
 
-		4 objetos implicados:
-		- Connection:           -> representa el enlace físico con la base de datos -> uri: jdbc:mysql://localhost/miDB
-		(jdbc es la primera primera parte de la URI (protocolo de enrutamiento), al igual que otros protocolos pueden ser:
-		ftp:// smb:// nfs:// ssh:// file: (en protocolos de internet)). Lo siguiente que compone la URI es el tipo de
-		DBS que vamos a utilizar (en nuestro caso mysql), la URL del servidor (127.0.0.1 o localhost; o
-		el DNS que tengamos si es una conexión externa) y el puerto (3306 por defecto).
+		4 objetos implicados: "TODOS DENTRO DE LA CLASE DAO"
+		--Connection: --> representa el enlace físico con la base de datos -> uri: jdbc:mysql://localhost/miDB
 
-		- Statement:            -> permite ejecutar consultas SQL "planas". Es vulnerable a SQL Injection.
+                (jdbc es la primera primera parte de la URI (protocolo de enrutamiento), al igual que otros protocolos pueden ser:
+                ftp:// smb:// nfs:// ssh:// file: (en protocolos de internet)). Lo siguiente que compone la URI es el tipo de
+                DBS que vamos a utilizar (en nuestro caso mysql), la URL del servidor (127.0.0.1 o localhost; o
+                el DNS que tengamos si es una conexión externa) y el puerto (3306 por defecto).
 
-		- PrepareStatement:     -> Ejecuta consultas parametrizadas (usando ?). Previene la inyección de código malicioso
-		al gestionar los datos en el lado del cliente.
+		--Statement: --> permite ejecutar consultas SQL "planas". Es vulnerable a SQL Injection.
 
-		- ResultSet -> Almacena los registros obtenidos tras una sentencia SELECT.
+		--PrepareStatement: --> Ejecuta consultas parametrizadas (usando ?). Previene la inyección de código malicioso
+		                        al gestionar los datos en el lado del cliente.
+
+		--ResultSet: -> Permite ejecutar una query y obtener la tupla de datos.
+		                Almacena los registros obtenidos tras una sentencia SELECT.
+
+		        Una tupla de datos es una estructura de datos ordenada y inmutable (no se puede modificar una vez creada)
+		        que agrupa un número fijo de elementos, los cuales pueden ser de distintos tipos. Se utilizan comúnmente
+		        para almacenar secuencias de datos que no deben cambiar, como coordenadas o registros, ofreciendo
+		        seguridad y eficiencia.
 
 
 	2 - ORM -> Hibernate (ORM Java) -> Nivel intermedio donde se mapean objetos directamente a tablas sin escribir SQL

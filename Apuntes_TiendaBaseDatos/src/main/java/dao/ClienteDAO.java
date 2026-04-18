@@ -28,7 +28,7 @@ public class ClienteDAO {
      * INSERCIÓN INSEGURA (Usa Statement normal).
      * Vulnerable a Inyección SQL porque concatena Strings directamente.
      */
-    public int insertarUsuario(Cliente cliente) {
+    public int insertarUsuario(Cliente cliente) { // El retorno ayuda a saber cuántos registros se han insertado
         // String.format ayuda a construir el String inyectando las constantes de la interfaz SchemDB.
         String query = String.format("INSERT INTO %s (%s, %s, %s, %s, %s) VALUES ('%s','%s','%s',%d,%d)",
                 SchemDB.TAB_CLIENTES,
@@ -37,17 +37,18 @@ public class ClienteDAO {
         );
         try {
             statement = connection.createStatement();
-            // executeUpdate() se usa para INSERT, UPDATE, DELETE. Devuelve filas afectadas.
+            // executeUpdate() se usa para INSERT, UPDATE, DELETE. Devuelve un int que representa las filas afectadas.
             return statement.executeUpdate(query);
         } catch (SQLException e) {
             System.out.println("Error en la ejecucion");
             System.out.println(e.getMessage());
         }
-        return -1;
+        return -1; /* Mediante el retorno de -1 podemos saber si los datos no se están insertando */
     }
 
     /**
      * INSERCIÓN SEGURA (Usa PreparedStatement).
+     * No mete los valores formateados en la query
      * Lanza la excepción hacia arriba (throws) para que la controle la clase Tienda.
      */
     public boolean insertarUsuarioPS(Cliente cliente) throws SQLException {
@@ -61,7 +62,8 @@ public class ClienteDAO {
         // Pre-compilamos la consulta en MySQL
         preparedStatement = connection.prepareStatement(query);
 
-        // Parametrizamos los datos indicando la posición del '?' y su valor correspondiente
+        /* Parametrizamos los datos indicando la posición del '?' y su valor correspondiente
+           (EL PRIMER ELEMENTO ES EL Nº1, Y NO EL 0! PORQUE SON PARÁMETROS EN BASE 1 Y NO POSICIONES EN BASE 0!!) */
         preparedStatement.setString(1, cliente.getNombre());
         preparedStatement.setString(2, cliente.getApellido());
         preparedStatement.setString(3, cliente.getCorreo());
@@ -71,6 +73,12 @@ public class ClienteDAO {
         // execute() devuelve un booleano (true si el primer resultado es un ResultSet, false si es recuento de actualización)
         return preparedStatement.execute();
     }
+
+    /*
+    * Tanto execute() con executeUpdate() se usan para inserciones, actualizaciones o borrados, dado que uno retornan un
+    * booleano y un int, respectivamente lo que puede valer para saber si ha habido inserción, acualización o borrado,
+    * pero, sin embargo, no nos vale cuando necesitamos hacer consultas en las que se haya de devolver el objeto.
+    */
 
     public int actualizarUsuario(String correo, String nombre) {
         String query = String.format("UPDATE %s SET %s=? WHERE %s=?",
