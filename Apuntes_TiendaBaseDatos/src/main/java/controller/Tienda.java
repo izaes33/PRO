@@ -24,7 +24,7 @@ public class Tienda {
     }
 
     public void agregarUsuario(Cliente cliente){
-        System.out.println("Procedemos a meter el usuario en el sistema");
+        System.out.println("Procedemos a meter el usuario en el sistema..");
         try {
             // Delegamos la inserción al DAO usando el método seguro (PreparedStatement)
             clienteDAO.insertarUsuarioPS(cliente);
@@ -32,7 +32,7 @@ public class Tienda {
             // Si salta un SQLException, probablemente sea porque el correo está duplicado
             // (violación de clave única en MySQL).
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Este correo ya esta en uso, por favor indica otro diferente");
+            System.out.print("Este correo ya esta en uso, por favor indica otro diferente: ");
             String correo = scanner.next();
             // Actualizamos el objeto cliente con el nuevo correo
             cliente.setCorreo(correo);

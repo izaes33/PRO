@@ -106,7 +106,8 @@ public class ClienteDAO {
             // executeQuery() se usa SOLO para SELECT. Devuelve un ResultSet (como una tabla virtual en memoria).
             resultSet = preparedStatement.executeQuery();
 
-            // resultSet.next() mueve el "cursor" fila por fila. Devuelve false cuando no hay más filas.
+            /* resultSet.next() mueve el "cursor" fila por fila. Devuelve false cuando no hay más filas.
+        (resultSet NO ES ITERABLE a través de for o foreach, pero podemos recorrerlo a través del método next()). */
             while (resultSet.next()) {
                 // Extraemos los datos de la fila actual usando los nombres de las columnas (constantes)
                 String nombre = resultSet.getString(SchemDB.COL_NAME);
