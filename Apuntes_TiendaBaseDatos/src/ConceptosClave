@@ -23,3 +23,6 @@ inyectar código SQL destructivo en tus inputs.
 
 -Lombok-> Las etiquetas @Getter, @Setter y @NoArgsConstructor en Cliente son de la librería Lombok.
 Evitan tener que escribir a mano todos los getters y setters, manteniendo el código limpio.
+LOMBOK PUEDE TRAER PROBLEMAS PORQUE: @Data  -> Sobreescribe el método ToString
+Y @EqualHashCode -> Da problemas con ORM
+AMBOS MÉTODOS PUEDEN EXCLUÍRSE CON LA ETIQUETA @ExcludeData o @@ExcludeEqualHashCode

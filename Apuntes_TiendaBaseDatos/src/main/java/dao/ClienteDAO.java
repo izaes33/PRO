@@ -128,3 +128,6 @@ public class ClienteDAO {
         return clientes;
     }
 }
+/*La diferencia principal entre DAO (Data Access Object) y DTO (Data Transfer Object) radica en su propósito:
+el DAO se encarga de acceder y manipular los datos de la base de datos (lógica de persistencia), mientras que el
+DTO se usa para transportar datos entre capas (por ejemplo, del backend al frontend) sin lógica de negocio.*/
