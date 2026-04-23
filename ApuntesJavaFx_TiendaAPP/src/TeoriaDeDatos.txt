@@ -14,6 +14,9 @@ La clase Product es lo que llamamos un POJO (Plain Old Java Object). Es el molde
  - Lombok (@Data):  -> Es una herramienta de productividad. Al poner @Data, Java genera automáticamente los métodos
 que siempre necesitamos (Getters, Setters, toString). Esto mantiene el código limpio y enfocado en los datos,
 no en la "basura" repetitiva.
+LOMBOK PUEDE TRAER PROBLEMAS PORQUE: @Data  -> Sobreescribe el método ToString
+Y @EqualHashCode -> Da problemas con ORM
+AMBOS MÉTODOS PUEDEN EXCLUÍRSE CON LA ETIQUETA @ExcludeData o @@ExcludeEqualHashCode
  - Enums (Seguridad de Tipos):  -> En lugar de usar texto libre (String) para categorías o políticas de devolución,
 usamos Enums. Esto obliga al programa a usar solo valores válidos (como BEAUTY o FRAGRANCES), evitando errores de
 escritura que romperían la app.

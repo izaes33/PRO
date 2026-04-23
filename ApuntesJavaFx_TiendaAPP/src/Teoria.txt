@@ -12,7 +12,7 @@ En el código, dentro de initialize, se llama a tres métodos para mantener el c
 - initGUI():    -> Se usa para aplicar esas configuraciones a los elementos visuales.
 - actions():    -> Se usa para decirle a los botones qué hacer cuando interactúen con ellos.
 
--- Dando funcionalidad: Eventos Simples (setOnAction) ->>
+-- Dando funcionalidad: Eventos Simples - Directos (setOnAction) ->>
 Cuando se quiere que un botón haga algo al pulsarlo, se usa setOnAction. Esto espera un
 "Escuchador de Eventos" (Event Handler). Hoy en día, en Java, esto se escribe usando una
 función lambda (event -> { ... }), que básicamente dice: "Cuando ocurra la acción principal
