@@ -144,3 +144,19 @@ Por qué se hace esto -> Porque en Docker: 1 contenedor = 1 servicio = Más cont
 
 Resumen: No se está usando XAMPP dentro de Docker, se están usando contenedores que hacen lo mismo
 (El nombre “xampp” es solo etiqueta, no el software real).
+
+--------------------------------------------------------------------
+
+Los contenedores de Docker son efímeros (temporales). Un contenedor es como un ordenador virtual "de usar y tirar".
+Si levantas la base de datos y haces cambio, y luego borras el contenedor, pierdes absolutamente todos los datos.
+
+Para solucionar esto, usamos los Docker Volumes (Volúmenes de Docker).
+Un volumen es como un disco duro externo o un USB que enchufas al contenedor. Aunque el contenedor se destruya, el
+"disco duro" (el volumen) sigue existiendo de forma segura en tu ordenador físico (tu PC host).
+Docker le dice al contenedor: "Oye MySQL, cada vez que vayas a guardar un dato, guárdalo en mi volumen exterior.
+
+Cuando vuelvas a crear un contenedor nuevo, le vuelves a enchufar ese mismo volumen.
+
+Una alternativa muy común en Desarrollo (Bind Mounts)
+En lugar de dejar que Docker gestione el volumen oculto, a veces en tu PC local prefieres decirle a Docker exactamente
+en qué carpeta tuya de Windows o Linux quieres guardar los datos. A esto se le llama Bind Mount.
