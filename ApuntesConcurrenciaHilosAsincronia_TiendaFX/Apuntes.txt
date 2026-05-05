@@ -1,0 +1,11 @@
+Hilos (Threads): Son las "líneas de ejecución" o los "trabajadores" del programa.
+Toda aplicación con interfaz gráfica tiene un hilo principal (el UI Thread). Al crear nuevos objetos Thread,
+se está "contratando trabajadores adicionales" para que hagan labores en paralelo.
+
+Concurrencia: Es la capacidad de la aplicación para gestionar múltiples tareas progresando al mismo tiempo.
+En lugar de hacer una cosa, terminarla por completo, y luego empezar la siguiente (lo que se llamaría ejecución
+secuencial), el programa delega tareas a diferentes hilos para que avancen de forma simultánea.
+
+Asincronía: Es la técnica que se aplica con la clase Task. Significa que se solicita una operación (como descargar
+datos de internet) sin que el programa se quede esperando inmóvil a que termine. Configurando qué debe ocurrir
+cuando finalice (con el setOnSucceeded), permitiendo que el resto del programa siga funcionando sin interrupciones.
