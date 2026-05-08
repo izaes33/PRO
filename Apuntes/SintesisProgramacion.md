@@ -58,19 +58,19 @@ Cuando se compila y ejecuta un programa en lenguajes como Java o C#, las instruc
 
 **3\. Declaración-Instanciación-Inicialización**
 
-**1\. Declaración (Crear la etiqueta)**
+**A\. Declaración (Crear la etiqueta)**
 
 Le dice al programa que va a necesitar un espacio para guardar algo y se le da un nombre.
 
 - **En memoria:** Se reserva un hueco en el _Stack_ con el nombre de la variable, pero su valor es nulo (null).
 
-**2\. Instanciación (Crear la realidad)**
+**B\. Instanciación (Crear la realidad)**
 
 Es cuando se **crea el objeto físico** en la memoria utilizando la palabra new.
 
 - **En memoria:** Se reserva espacio en el _Heap_ para construir el objeto con todas sus propiedades.
 
-**3\. Inicialización (Conectar ambas cosas)**
+**C\. Inicialización (Conectar ambas cosas)**
 
 Es el acto de **asignar el objeto que se ha instanciado a la variable que ha declarado**. Se hace con el signo igual (=).
 
