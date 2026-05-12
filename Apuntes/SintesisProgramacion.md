@@ -19,8 +19,17 @@
 - _short ➔_ **_Short_**
 - _long ➔_ **_Long_**
 
-**Conversiones:** El "Casting" ocurre cuando los tipos encajan de forma natural (ej. un int que pasa a double). El "Parsing" es necesario cuando el cambio no es natural (ej. texto a número usando Integer.parseInt()) y puede fallar.  
-<br>
+**Conversiones:**
+
+- **Casteo:** Es la conversión de una variable de un tipo de dato a otro. Generalmente se usa para tipos primitivos (como pasar de decimal a entero) o entre objetos que comparten una jerarquía de herencia.
+  - **Implícito:** automático, cuando no hay pérdida de información.
+  - **Explícito:** forzado por el programador usando paréntesis, donde puede perderse precisión.
+- **Parseo:** conversión de una cadena de texto (String) hacia un número, una fecha o un objeto JSON.
+- **Autobox:** conversión automática que realiza el compilador para pasar de un tipo de dato primitivo a su correspondiente objeto o clase envoltorio.
+- **Unbox:** proceso inverso al autoboxing.
+- El "Casting" ocurre cuando los tipos encajan de forma natural (ej. un int que pasa a double).
+- El "Parsing" es necesario cuando el cambio no es natural (ej. texto a número usando Integer.parseInt()) y puede fallar.  
+  <br>
 
 **2\. La Memoria: ¿Qué es el Stack y el Heap y cómo se accede?**
 
@@ -58,19 +67,19 @@ Cuando se compila y ejecuta un programa en lenguajes como Java o C#, las instruc
 
 **3\. Declaración-Instanciación-Inicialización**
 
-**A\. Declaración (Crear la etiqueta)**
+**1\. Declaración (Crear la etiqueta)**
 
 Le dice al programa que va a necesitar un espacio para guardar algo y se le da un nombre.
 
 - **En memoria:** Se reserva un hueco en el _Stack_ con el nombre de la variable, pero su valor es nulo (null).
 
-**B\. Instanciación (Crear la realidad)**
+**2\. Instanciación (Crear la realidad)**
 
 Es cuando se **crea el objeto físico** en la memoria utilizando la palabra new.
 
 - **En memoria:** Se reserva espacio en el _Heap_ para construir el objeto con todas sus propiedades.
 
-**C\. Inicialización (Conectar ambas cosas)**
+**3\. Inicialización (Conectar ambas cosas)**
 
 Es el acto de **asignar el objeto que se ha instanciado a la variable que ha declarado**. Se hace con el signo igual (=).
 
@@ -96,24 +105,40 @@ Es el acto de **asignar el objeto que se ha instanciado a la variable que ha dec
 
 - **_Selección_**_:_ **if/else** evalúa una condición booleana, mientras que **switch** evalúa el valor exacto de una variable (char, int, string).
 - **_Repetición_**_:_ **for** ejecuta un bloque un número predeterminado de veces basándose en un rango numérico. **while** evalúa la condición primero (de 0 a n ejecuciones), mientras que **do-while** ejecuta primero y evalúa después (garantizando de 1 a n ejecuciones).
-- **Saltos de Flujo:** Dentro de los bucles (FOR, WHILE, DO WHILE) puedes usar **continue** para saltar la iteración actual, **break** para romper el bucle por completo, o **return** para abortar y salir del método  
-  <br>
+- **Saltos de Flujo:**
+  - **break ->** rompe la ejecución de la estructura de control
+  - **return ->** termina la ejecución del método
+  - **continue ->** salta una repetición en un bucle
+  - (En un método con tipo de retorno se ha de usar return OBLIGATORIAMENTE AL FINAL DEL MÉTODO).  
+    <br>
 
 **6\. Estructuras de Datos**
 
-- **Estáticas (Arrays):** Tienen un tamaño fijo (No se pueden agregar ni eliminar elementos una vez creados) y funcionan mediante índices o posiciones (desde 0 hasta length - 1). Pueden ser unidimensionales (como un "armario con huecos") o multidimensionales (matrices con filas y columnas). Se acceden llamando a su índice, empezando siempre desde 0.
+- **Iterables**
 - **Dinámicas:** Son aquellas capaces de alterar su tamaño en tiempo de ejecución. Si se basan en posiciones usamos colecciones como ArrayList, y si se basan en pares clave/valor usamos HashMap.
-  - **ArrayList (Dinámica e Indexada):** Colección que altera su tamaño automáticamente. Permite agregar (add), obtener (get), eliminar (remove) y conocer su tamaño (size) iterando con for o foreach.
-  - **HashMap (Dinámica por Clave-Valor):** No usa posiciones, sino que asocia un identificador único a un dato (ej. DNI -> Persona). Usamos put(K,V) para insertar, get(K) para extraer y remove(K) para borrar. Para recorrerlo, iteramos sobre sus claves (o directamente sobre sus valores.  
-    <br>
+  - **ArrayList (Dinámica e Indexada):** Colección que altera su tamaño automáticamente. Permite agregar (add), obtener (get), eliminar (remove) y conocer su tamaño (size) iterando con for o foreach. (casi nunca se ve que una variable se declare como ArrayList. Al declarar la variable como List, se le dice al programa: "No te preocupes por cómo funciona esta lista por dentro, solo confía en que se comporta como una lista”. Así, si a posterior se quiere cambiar la implementación, por ejemplo de ArrayList a LinkedList sólo habría que cambiar la instancia).
+- **Par clave-valor** <br>
 
 **7\. Programación Orientada a Objetos (POO)**
 
 La POO nos permite crear el "molde" o estructura de un tipo de dato que tendrá una realidad individual.
 
 - **Clases y Objetos:** Una clase es la plantilla básica para instanciar (crear) objetos. El nombre de las clases debe escribirse en singular y la primera letra en mayúscula. La clase principal requiere un método main, que actúa como la puerta de entrada de ejecución del programa. Las variables static pertenecen a la clase y no requieren que se instancie un objeto para acceder a ellas.
-- **Abstracción y Encapsulamiento:** Son pilares fundamentales. El encapsulamiento exige que los atributos (las propiedades que caracterizan al objeto) sean privados (private). Para acceder y modificar estos valores desde el exterior, es obligatorio implementar métodos públicos conocidos como getter y setter.
+- **Encapsulamiento:** exige que los atributos (las propiedades que caracterizan al objeto) sean privados (private). Para acceder y modificar estos valores desde el exterior, es obligatorio implementar métodos públicos conocidos como getter y setter.
 - **Constructores y Métodos:** Los constructores son métodos especiales con el mismo nombre de la clase que indican cómo se inicializa un objeto (pueden haber varios con firmas distintas). Los métodos son verbos que dotan de acciones o funcionalidades al objeto.
 - **Herencia y Polimorfismo:** La herencia **(mediante la palabra extends)** permite a una clase hija obtener propiedades de una clase padre, aunque en Java solo se puede heredar de una clase simultáneamente. Los constructores y elementos privados no se heredan directamente (requieren usar super()). El polimorfismo es la capacidad de "vestir" de varias formas a un elemento, por ejemplo, sobrescribiendo el comportamiento de un método heredado (usando @Override. Además, una clase hija también puede tener variables propias y métodos propios).
 - **Polimorfismo en profundidad:** No es solo "sobrescribir" métodos (@Override). Es la capacidad de que una variable de la clase Padre (ej. List) apunte a un objeto de la clase Hija (ej. ArrayList). Esto te permite crear código altamente flexible. Si mañana quieres cambiar tu lista a un LinkedList, no tienes que reescribir todo tu programa, porque el resto del código solo interactúa con la "fachada" genérica.
   - ResultSet: Objeto que recibe los resultados de una consulta SELECT. Para extraer la información obtenida se requiere utilizar rs.next() para avanzar el puntero fila a fila.
+- **Abstracción:** Centrarse en _qué_ hace un objeto en lugar de _cómo_ lo hace, ocultando la complejidad interna. Consiste en mostrar solo lo esencial de un objeto y ocultar toda la complejidad innecesaria de cómo funciona por dentro.  
+  <br>
+
+**8\. Interfaces**
+
+Las interfaces permiten llevar al máximo la abstracción y polimorfismo. Son el nivel más puro de abstracción que existe en Java. De hecho, ni siquiera se pide escribir la palabra abstract al definirlas. (Se definen como `public interface`).
+
+Son un contrato 100% estricto que define _qué_ acciones debe poder hacer una clase, pero no _cómo_ debe hacerlas. No se pueden instanciar, se usan mediante `implements`. Contienen:
+
+- Métodos abstractos: Solo nombre y retorno PERO SIN CUERPO `{}`.
+- Atributos constantes (`public static final` POR DEFECTO).
+
+Si una clase normal (no abstracta) usa `implements`, está 100% obligada a sobreescribir el código de todos y cada uno de los métodos de la interfaz con `@Override`.
