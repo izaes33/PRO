@@ -4,7 +4,7 @@ Antes de escribir una sola línea de código, hay un proceso metódico para reso
 
 - **Fases de Desarrollo:** Todo proyecto profesional sigue un ciclo:
   - 1\. Planificar (pensar la solución).
-  - 2\. Diseño (UML, Wireframes, diagramas de bases de datos).
+  - 2\. Diseño (UML, wireframes-bocetos, diagramas de bases de datos).
   - 3\. Codificación.
   - 4\. Pruebas (Beta).
   - 5\. Lanzamiento (al servidor o generando instalables).
@@ -40,7 +40,7 @@ Para hacer el código más declarativo y usar _callbacks_ (funciones que se ejec
 
 - **Expresiones Lambda:** Siguen la sintaxis parametro -> cuerpo. Si la lambda tiene una sola línea, el return es implícito; si abres llaves {}, debes escribir return explícitamente. Se usan masivamente en flujos de datos (stream().map()).
 - **Interfaces Funcionales (Bi):**
-  - BiFunction&lt;G1, G2, G3&gt;: Admite tres parámetros (dos de entrada y el tercero define el tipo de retorno) y se usa para ejecutar _callbacks_ complejos mediante el método .apply().
+  - BiFunction&lt;G1, G2, G3&gt;: Admite tres parámetros (dos de entrada y el tercero define el tipo de retorno) y se usa para ejecutar _callbacks_ (una función que usa otra como argumento) complejos mediante el método .apply().
   - BiPredicate y BiConsumer: Variantes que admiten dos parámetros y se usan habitualmente en filtros o acciones terminales.
 - **Referencias de Métodos:** Es una sintaxis de acceso directo (Clase::metodo) que sustituye a las lambdas cuando no es necesario declarar parámetros explícitos, ya que el objeto llama al método de forma implícita.  
   <br>
@@ -51,7 +51,7 @@ Para hacer el código más declarativo y usar _callbacks_ (funciones que se ejec
 
 - **Tipos:**
   - **Excepciones en tiempo de ejecución (Unchecked o RunTime)**, como NullPointerException o ArithmeticException no son de obligada captura.
-  - **Excepciones chequeadas (**Checked), como IOException, dependen de elementos externos y deben capturarse obligatoriamente.
+  - **Excepciones chequeadas (Checked)**, como IOException, dependen de elementos externos y deben capturarse obligatoriamente.
 - **Captura:** El bloque try-catch-finally intenta ejecutar el código, captura el error en el momento y siempre ejecuta la porción finally al terminar. La palabra throws en la firma de un método delega la resolución del error a quien llame a dicho método.  
   <br>
 
@@ -63,4 +63,4 @@ Es una librería que genera código de manera automática durante el tiempo de c
 - **@AllArgsConstructor:** Instruye a Lombok para crear un constructor que incluya todos los atributos de la clase.
 - **@NoArgsConstructor:** Genera un constructor completamente vacío. Esto es estrictamente necesario.
 - **Sobrescritura de toString():** Al sobrescribir este método (a menudo usando String.format), se personaliza qué texto se muestra por consola al imprimir directamente la instancia del objeto.
-- **Sobrescritura de EqualsAndHashCode** **():** métodos que causan problemas con los ORM.
+- **Sobrescritura de EqualsAndHashCode():** métodos que causan problemas con los ORM.
