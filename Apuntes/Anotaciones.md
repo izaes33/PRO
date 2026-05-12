@@ -13,6 +13,8 @@
 **IDE**: Editor + depurador + herram  
 <br>
 
+---
+
 **Model:** datos.
 
 **View / Main:** interfaz + menús
@@ -24,6 +26,8 @@
 **Otros paquetes habituales:** exceptions, utils, database, environments  
 <br>
 
+---
+
 **Declarar**: crear sin valor
 
 **Inicializar**: Asignar valor a variable
@@ -32,6 +36,8 @@
 
 **Definir**: lo q hace un método, contiene una clase, o el espacio de una variable  
 <br>
+
+---
 
 **Variable**: espacio reservado en memoria con tipo + nombre q almacena valor
 
@@ -48,6 +54,8 @@
 **Constructor**: mismo nombre que la clase, indica como se inicializa un objeto.  
 <br>
 
+---
+
 **Casteo**: cuando los tipos encajan de forma natural. Tipos
 
 - Implícito / automático -> cuando no hay pérdida de información.
@@ -60,6 +68,8 @@
 **Unbox**: proceso inverso.  
 <br>
 
+---
+
 **MEMORIA**
 
 - **Stack (pila) ->** ordenada y rápida, LIFO, guarda: llamadas a métodos, valores primitivos, referencias a datos complejos y estados de ejec.
@@ -70,6 +80,8 @@
 - **Static**: guarda una variable en el espacio global de la clase, permitiendo que todo el programa pueda acceder directamente a ella, sin necesidad de instanciar la clase.  
   <br>
 
+---
+
 **OPERADORES**:
 
 - **Aritméticos**: + - \* / %
@@ -78,6 +90,8 @@
 
 - **Lógicos** & && | ||  
   <br>
+
+---
 
 **ESTRUCT DE CONTROL ->**  
 <br>
@@ -96,6 +110,8 @@
 _Casi todo en Java necesita un boolean para decidir el flujo de control, a excepción del switch, que busca coincidencias exactas y es muy quisquilloso con los 4 primitivos pequeños, sus wrappers, String y enum._  
 <br>
 
+---
+
 **SALTOS DE FLUJO**
 
 - **break** -> rompe la ejecución de la estructura de control
@@ -106,6 +122,8 @@ _Casi todo en Java necesita un boolean para decidir el flujo de control, a excep
 
 (En un método con tipo de retorno se ha de usar return OBLIGATORIAMENTE AL FINAL DEL MÉTODO).  
 <br>
+
+---
 
 **ESTRUCT DE DATOS**
 
@@ -120,6 +138,8 @@ _Casi todo en Java necesita un boolean para decidir el flujo de control, a excep
   - **HashMap**: t dinámico, asocia IDs con datos, solo admite tipos complejos, tiene métodos: put(K,V), get(K) y remove(K). Se puede recorrer iterando o bien sus claves o sus valores.  
     <br>
 
+---
+
 **POO -> 4 pilares:**
 
 - **Encapsulación:** atributos private, interacc. Mediante getter / setter
@@ -128,13 +148,14 @@ _Casi todo en Java necesita un boolean para decidir el flujo de control, a excep
 - **Abstracción:** qué hace un objeto y NO cómo mostrando lo esencial y ocultando la complejidad.  
   <br>
 
-**Interfaces**:
+---
 
-**Se definen como public interface. Métodos abstractos (**solo nombre + retorno SIN CUERPO {}**. Atrib. Constantes.** Si una clase normal (no abstracta) usa **implements**, está **100% obligada** a sobreescribir el código de todos y cada uno de los métodos de la interfaz con @Override.  
+**Interfaces: Se definen como public interface. Métodos abstractos (**solo nombre + retorno SIN CUERPO {}**. Atrib. Constantes.** Si una clase normal (no abstracta) usa **implements**, está **100% obligada** a sobreescribir el código de todos y cada uno de los métodos de la interfaz con @Override.  
 <br>
 
-**Funciones Stream:** procesan secuencias de datos. Permiten: filtrar (filter), ordenar (sort), transformar (map) o filtrar (filter).  
-<br>
+---
+
+**Funciones Stream:** procesan secuencias de datos. Permiten: filtrar (filter), ordenar (sort), transformar (map) o filtrar (filter).
 
 **Expresiones Lambda:** parametro -> cuerpo. Si tiene una sola línea, return implícito; si abre llaves {}, debe escribirse explícitamente. Se usan mucho en flujos de datos (stream().map()).
 
@@ -145,10 +166,15 @@ _Casi todo en Java necesita un boolean para decidir el flujo de control, a excep
 **Referencia a métodos:** sintaxis de acceso directo **(Clase::metodo)** que sustituye a las lambdas cuando no es necesario declarar parámetros.  
 <br>
 
+---
+
 **Recursividad:** método se llama a sí mismo, consume mucha memoria, precisa "casos base" para detener las llamadas.  
 <br>
 
-**INGENIERÍA DE SOFTWARE:**
+---
+
+**INGENIERÍA DE SOFTWARE:**  
+<br>
 
 - **FASES DE DESARROLLO:**
   - Planificar (pensar la solución).
@@ -163,12 +189,20 @@ _Casi todo en Java necesita un boolean para decidir el flujo de control, a excep
 - **BUENAS** **PRÁCTICAS**: separar funcionalidades en distintos métodos, minimizar el uso de variables static, evitar anidar más de dos estructuras de repetición (bucles) y ser cuidadoso con el uso de return y break en iteraciones poco profundas.  
   <br>
 
+---
+
 **Excepciones**: errores que interrumpen el flujo del programa en ejecución. Se gestionan con la estructura try-catch-finally. El código que puede fallar se envuelve en el try, la respuesta al error va en el catch, y el finally se ejecuta siempre.
 
 - Tipos: unchequed -> runtime / chequed -> IOException
 
-La palabra throws en la firma de un método delega la resolución del error a quien llame a dicho método.
+La palabra throws en la firma de un método delega la resolución del error a quien llame a dicho método.  
+<br>
 
-**JSON**: Formato de texto ligero y fácil de leer tanto para humanos como para máquinas. Estructura datos en pares clave-valor. Extracc. De datos mediante **parseo con librerías Jackson o Gson.**
+---
+
+**JSON**: Formato de texto ligero y fácil de leer tanto para humanos como para máquinas. Estructura datos en pares clave-valor. Extracc. De datos mediante **parseo con librerías Jackson o Gson.**  
+<br>
+
+---
 
 **Maven vs Local:** En vez de descargar librerías e inyectarlas manualmente en IntelliJ (Local), Maven centraliza estas descargas bajo demanda en un servidor mediante un archivo llamado pom.xml.
